@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AnggotaController;
 use App\Http\Controllers\PetugasController;
+use App\Http\Controllers\BukuController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,3 +26,4 @@ Route::get('/dashboard',[DashboardController::class, 'index']);
 
 Route::get('/anggota',[AnggotaController::class, 'index']);
 Route::get('/petugas',[PetugasController::class, 'index']);
+Route::get('/buku',[BukuController::class, 'index']);
