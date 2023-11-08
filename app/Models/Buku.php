@@ -14,9 +14,10 @@ class Buku extends Model
     protected $fillable = [
         'kode','judulbuku','penulis','isbn','th_terbit','ket','foto','ketgori_id','penerbit_id'
     ];
+    public $timestamps = false;
     //relasi antara table
 
-    public function buku(){
-        return $this->belongsTo(Buku::class);
-    }
+    // public function kategori(){
+    //     return $this->belongsTo(Kategori::class);
+    // }
 }

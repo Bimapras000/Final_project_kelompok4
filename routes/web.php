@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AnggotaController;
 use App\Http\Controllers\PetugasController;
 use App\Http\Controllers\BukuController;
+use App\Http\Controllers\PengembalianController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,4 +27,7 @@ Route::get('/dashboard',[DashboardController::class, 'index']);
 
 Route::resource('anggota',AnggotaController::class);
 Route::get('/petugas',[PetugasController::class, 'index']);
-Route::get('/buku',[BukuController::class, 'index']);
+Route::get('admin/buku',[BukuController::class, 'index']);
+Route::get('admin/buku/create',[BukuController::class, 'create']);
+Route::post('admin/buku/store',[BukuController::class, 'store']);
+Route::get('/Pengembalian',[PengembalianController::class, 'index']);
