@@ -23,6 +23,9 @@ class BukuController extends Controller
     public function create()
     {
         //
+        $buku = DB::table('buku')->get();
+
+        return view ('admin.buku.create', compact('buku'));
     }
 
     /**
@@ -31,6 +34,18 @@ class BukuController extends Controller
     public function store(Request $request)
     {
         //
+        $buku = new Buku;
+        $buku->kode = $request->kode;
+        $buku->judulbuku = $request->judulbuku;
+        $buku->penulis = $request->penulis;
+        $buku->isbn = $request->isbn;
+        $buku->th_terbit = $request->th_terbit;
+        $buku->ket = $request->ket;
+        $buku->foto = $request->foto;
+        $buku->kategori_id = $request->kategori_id;
+        $buku->penerbit_id = $request->penerbit_id;
+        $buku->save();
+        return redirect('admin/buku');
     }
 
     /**
