@@ -9,7 +9,7 @@
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+                            <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#tambahDataModal">Tambah Data</a>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -60,6 +60,58 @@
                             </div>
                         </div>
                     </div>
+
+                    
+                    <div class="modal fade" id="tambahDataModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                            <form action="{{route('anggota.store')}}" method="POST">
+                            @csrf
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">New message</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                
+                                <div class="mb-3">
+                                    <label for="recipient-name" class="col-form-label">Nama :</label>
+                                    <input type="text" name="nama" class="form-control" id="recipient-name">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="recipient-name" class="col-form-label">Alamat :</label>
+                                    <input type="text" name="alamat" class="form-control" id="recipient-name">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="recipient-name" class="col-form-label">Nomor Telepon :</label>
+                                    <input type="text" name="no_tlp" class="form-control" id="recipient-name">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="recipient-name" class="col-form-label">Tanggal Bergabung :</label>
+                                    <input type="date" name="tgl_bergabung" class="form-control" id="recipient-name">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="recipient-name" class="col-form-label">Email :</label>
+                                    <input type="email" name="email" class="form-control" id="recipient-name">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="recipient-name" class="col-form-label">Username :</label>
+                                    <input type="text" name="username" class="form-control" id="recipient-name">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="recipient-name" class="col-form-label">Password :</label>
+                                    <input type="password" name="password" class="form-control" id="recipient-name">
+                                </div>
+                                
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" name="submit" class="btn btn-primary">Sumbit</button>
+                            </div>
+                            </form>
+                            </div>
+                        </div>
+                    </div>
+                    
 
 
 

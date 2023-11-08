@@ -24,6 +24,6 @@ Route::get('/', function () {
 Route::get('/dashboard',[DashboardController::class, 'index']);
 
 
-Route::get('/anggota',[AnggotaController::class, 'index']);
+Route::resource('anggota',AnggotaController::class);
 Route::get('/petugas',[PetugasController::class, 'index']);
 Route::get('/buku',[BukuController::class, 'index']);

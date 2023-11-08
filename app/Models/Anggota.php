@@ -15,7 +15,7 @@ class Anggota extends Model
         protected $fillable = [
             'nama','alamat','no_tlp','tanggal_bergabung','email','username','password'
         ];
-        
+        public $timestamps = false;
     
         public function peminjaman(){
             return $this->hasMany(Peminjaman::class);

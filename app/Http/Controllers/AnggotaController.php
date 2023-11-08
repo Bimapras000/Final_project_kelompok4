@@ -22,6 +22,7 @@ class AnggotaController extends Controller
     public function create()
     {
         //
+        return view('admin.anggota.index');
     }
 
     /**
@@ -30,6 +31,16 @@ class AnggotaController extends Controller
     public function store(Request $request)
     {
         //
+        $anggota = new Anggota;
+        $anggota->nama = $request->nama;
+        $anggota->alamat = $request->alamat;
+        $anggota->no_tlp = $request->no_tlp;
+        $anggota->tgl_bergabung = $request->tgl_bergabung;
+        $anggota->email = $request->email;
+        $anggota->username = $request->username;
+        $anggota->password = $request->password;
+        $anggota->save();
+        return redirect('anggota');
     }
 
     /**
