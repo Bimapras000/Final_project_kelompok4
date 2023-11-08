@@ -27,5 +27,7 @@ Route::get('/dashboard',[DashboardController::class, 'index']);
 
 Route::get('/anggota',[AnggotaController::class, 'index']);
 Route::get('/petugas',[PetugasController::class, 'index']);
-Route::get('/buku',[BukuController::class, 'index']);
+Route::get('admin/buku',[BukuController::class, 'index']);
+Route::get('admin/buku/create',[BukuController::class, 'create']);
+Route::post('admin/buku/store',[BukuController::class, 'store']);
 Route::get('/Pengembalian',[PengembalianController::class, 'index']);
