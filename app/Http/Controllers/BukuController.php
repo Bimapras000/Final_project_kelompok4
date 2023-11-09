@@ -54,6 +54,10 @@ class BukuController extends Controller
     public function show(string $id)
     {
         //
+        $buku = DB::table('buku')
+        ->where('buku.id', $id)
+        ->get();
+        return view ('admin.buku.detail', compact('buku'));
     }
 
     /**
@@ -62,6 +66,8 @@ class BukuController extends Controller
     public function edit(string $id)
     {
         //
+        $buku = DB::table('buku')->where('id',$id)->get();
+        return view ('admin.buku.edit', compact('buku'));
     }
 
     /**
@@ -70,6 +76,18 @@ class BukuController extends Controller
     public function update(Request $request, string $id)
     {
         //
+        DB::table('buku')->where('id',$request->id)->update([
+            'kode'=>$request->kode,
+            'judulbuku'=>$request->judulbuku,
+            'penulis'=>$request->penulis,
+            'isbn'=>$request->isbn,
+            'th_terbit'=>$request->th_terbit,
+            'ket'=>$request->ket,
+            'foto'=>$request->foto,
+            'kategori_id'=>$request->kategori_id,
+            'penerbit_id'=>$request->penerbit_id,
+        ]);
+        return redirect('admin/buku');
     }
 
     /**
@@ -78,5 +96,7 @@ class BukuController extends Controller
     public function destroy(string $id)
     {
         //
+        DB::table('buku')->where('id', $id)->delete();
+        return redirect('admin/buku');
     }
 }

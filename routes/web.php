@@ -31,3 +31,7 @@ Route::get('admin/buku',[BukuController::class, 'index']);
 Route::get('admin/buku/create',[BukuController::class, 'create']);
 Route::post('admin/buku/store',[BukuController::class, 'store']);
 Route::get('/Pengembalian',[PengembalianController::class, 'index']);
+Route::get('admin/buku/show/{id}',[BukuController::class, 'show']);
+Route::get('admin/buku/edit/{id}',[BukuController::class, 'edit']);
+Route::post('admin/buku/update/{id}',[BukuController::class, 'update']);
+Route::get('admin/buku/delete/{id}',[BukuController::class, 'destroy']);
