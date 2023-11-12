@@ -24,7 +24,6 @@ class BukuController extends Controller
     {
         //
         $buku = DB::table('buku')->get();
-
         return view ('admin.buku.create', compact('buku'));
     }
 
@@ -32,21 +31,34 @@ class BukuController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        //
-        $buku = new Buku;
-        $buku->kode = $request->kode;
-        $buku->judulbuku = $request->judulbuku;
-        $buku->penulis = $request->penulis;
-        $buku->isbn = $request->isbn;
-        $buku->th_terbit = $request->th_terbit;
-        $buku->ket = $request->ket;
-        $buku->foto = $request->foto;
-        $buku->kategori_id = $request->kategori_id;
-        $buku->penerbit_id = $request->penerbit_id;
-        $buku->save();
-        return redirect('admin/buku');
+{
+    // Jika ada foto diunggah
+    if (!empty($request->foto)) {
+        // Buat nama unik untuk file foto
+        $fileName = 'foto-' . uniqid() . '.' . $request->foto->extension();
+        
+        // Pindahkan file foto ke direktori yang ditentukan
+        $request->foto->move(public_path('admin/img'), $fileName);
+    } else {
+        $fileName = ''; // Jika tidak ada foto diunggah, atur nama file kosong
     }
+
+    // Masukkan data buku ke tabel buku
+    DB::table('buku')->insert([
+        'kode' => $request->kode,
+        'judulbuku' => $request->judulbuku,
+        'penulis' => $request->penulis,
+        'isbn' => $request->isbn,
+        'th_terbit' => $request->th_terbit,
+        'ket' => $request->ket,
+        'foto' => $fileName,
+        'kategori_id' => $request->kategori_id,
+        'penerbit_id' => $request->penerbit_id,
+    ]);
+
+    // Redirect ke halaman admin/buku setelah selesai
+    return redirect('admin/buku');
+}
 
     /**
      * Display the specified resource.
@@ -54,6 +66,10 @@ class BukuController extends Controller
     public function show(string $id)
     {
         //
+        $buku = DB::table('buku')
+        ->where('buku.id', $id)
+        ->get();
+        return view ('admin.buku.detail', compact('buku'));
     }
 
     /**
@@ -62,15 +78,37 @@ class BukuController extends Controller
     public function edit(string $id)
     {
         //
+        $buku = DB::table('buku')->where('id',$id)->get();
+        return view ('admin.buku.edit', compact('buku'));
     }
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
-    {
-        //
+{
+    $fileName = '';
+
+    if (!empty($request->foto)) {
+        // Proses foto baru
+        $fileName = 'foto-' . $request->id . '.' . $request->foto->extension();
+        $request->foto->move(public_path('admin/img'), $fileName);
     }
+
+    DB::table('buku')->where('id', $request->id)->update([
+        'kode' => $request->kode,
+        'judulbuku' => $request->judulbuku,
+        'penulis' => $request->penulis,
+        'isbn' => $request->isbn,
+        'th_terbit' => $request->th_terbit,
+        'ket' => $request->ket,
+        'foto' => $fileName,
+        'kategori_id' => $request->kategori_id,
+        'penerbit_id' => $request->penerbit_id,
+    ]);
+
+    return redirect('admin/buku');
+}
 
     /**
      * Remove the specified resource from storage.
@@ -78,5 +116,7 @@ class BukuController extends Controller
     public function destroy(string $id)
     {
         //
+        DB::table('buku')->where('id', $id)->delete();
+        return redirect('admin/buku');
     }
 }
