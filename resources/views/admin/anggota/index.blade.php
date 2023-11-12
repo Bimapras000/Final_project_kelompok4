@@ -23,6 +23,7 @@
                                             <th>Nomor Telepon</th>
                                             <th>Tanggal Bergabung</th>
                                             <th>Email</th>
+                                            <th>Action</th>
 
 
 
@@ -36,6 +37,7 @@
                                             <th>Nomor Telepon</th>
                                             <th>Tanggal Bergabung</th>
                                             <th>Email</th>
+                                            <th>Action</th>
 
                                         </tr>
                                     </tfoot>
@@ -50,6 +52,36 @@
                                             <td>{{$a->no_tlp}}</td>
                                             <td>{{$a->tgl_bergabung}}</td>
                                             <td>{{$a->email}}</td>
+                                            <td>
+                                                
+                                            <a href="{{url('admin/anggota/edit/'.$a->id)}}" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></a>
+                                            
+                                            <!-- Button trigger modal -->
+                                            <button type="button"  class="btn btn-sm btn-danger" data-toggle="modal" data-target="#exampleModal{{$a->id}}">
+                                            <i class="fas fa-trash"></i>
+                                            </button>
+
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="exampleModal{{$a->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Hapus Data</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                Apakah anda yakin ingin menghapus data {{$a->nama}} ?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    <a href="{{url('admin/anggota/delete/'.$a->id)}}" type="button" class="btn btn-danger">Delete</a>
+                                                </div>
+                                                </div>
+                                            </div>
+                                            </div>
+                                            </td>
                                             
                                         </tr>
                                         
@@ -65,7 +97,7 @@
                     <div class="modal fade" id="tambahDataModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
-                            <form action="{{route('anggota.store')}}" method="POST">
+                            <form action="{{url('admin/anggota/store')}}" method="POST">
                             @csrf
                             <div class="modal-header">
                                 <h1 class="modal-title fs-5" id="exampleModalLabel">New message</h1>
@@ -75,42 +107,43 @@
                                 
                                 <div class="mb-3">
                                     <label for="recipient-name" class="col-form-label">Nama :</label>
-                                    <input type="text" name="nama" class="form-control" id="recipient-name">
+                                    <input type="text" name="nama" class="form-control" id="recipient-name" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="recipient-name" class="col-form-label">Alamat :</label>
-                                    <input type="text" name="alamat" class="form-control" id="recipient-name">
+                                    <input type="text" name="alamat" class="form-control" id="recipient-name" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="recipient-name" class="col-form-label">Nomor Telepon :</label>
-                                    <input type="text" name="no_tlp" class="form-control" id="recipient-name">
+                                    <input type="text" name="no_tlp" class="form-control" id="recipient-name" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="recipient-name" class="col-form-label">Tanggal Bergabung :</label>
-                                    <input type="date" name="tgl_bergabung" class="form-control" id="recipient-name">
+                                    <input type="date" name="tgl_bergabung" class="form-control" id="recipient-name" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="recipient-name" class="col-form-label">Email :</label>
-                                    <input type="email" name="email" class="form-control" id="recipient-name">
+                                    <input type="email" name="email" class="form-control" id="recipient-name" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="recipient-name" class="col-form-label">Username :</label>
-                                    <input type="text" name="username" class="form-control" id="recipient-name">
+                                    <input type="text" name="username" class="form-control" id="recipient-name" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="recipient-name" class="col-form-label">Password :</label>
-                                    <input type="password" name="password" class="form-control" id="recipient-name">
+                                    <input type="password" name="password" class="form-control" id="recipient-name" required>
                                 </div>
                                 
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                 <button type="submit" name="submit" class="btn btn-primary">Sumbit</button>
                             </div>
                             </form>
                             </div>
                         </div>
                     </div>
+                    
                     
 
 

@@ -22,12 +22,22 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::prefix('admin')->group(function(){
+
 Route::get('/dashboard',[DashboardController::class, 'index']);
 
+// route anggota
+Route::get('/anggota',[AnggotaController::class, 'index']);
+Route::get('/anggota/create',[AnggotaController::class, 'create']);
+Route::post('/anggota/store',[AnggotaController::class, 'store']);
+Route::get('/anggota/edit/{id}',[AnggotaController::class, 'edit']);
+Route::post('/anggota/update/{id}',[AnggotaController::class, 'update']);
+Route::get('/anggota/delete/{id}',[AnggotaController::class, 'destroy']);
 
-Route::resource('anggota',AnggotaController::class);
 Route::get('/petugas',[PetugasController::class, 'index']);
-Route::get('admin/buku',[BukuController::class, 'index']);
-Route::get('admin/buku/create',[BukuController::class, 'create']);
-Route::post('admin/buku/store',[BukuController::class, 'store']);
+Route::get('/buku',[BukuController::class, 'index']);
+Route::get('/buku/create',[BukuController::class, 'create']);
+Route::post('/buku/store',[BukuController::class, 'store']);
 Route::get('/Pengembalian',[PengembalianController::class, 'index']);
+
+});

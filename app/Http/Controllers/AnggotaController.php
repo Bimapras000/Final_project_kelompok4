@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Anggota;
+use Illuminate\Support\Facades\DB;
 
 class AnggotaController extends Controller
 {
@@ -40,7 +41,7 @@ class AnggotaController extends Controller
         $anggota->username = $request->username;
         $anggota->password = $request->password;
         $anggota->save();
-        return redirect('anggota');
+        return redirect('admin/anggota');
     }
 
     /**
@@ -57,6 +58,8 @@ class AnggotaController extends Controller
     public function edit(string $id)
     {
         //
+        $anggota = Anggota::all()->where('id', $id);
+        return view('admin.anggota.edit', compact('anggota'));
     }
 
     /**
@@ -65,6 +68,17 @@ class AnggotaController extends Controller
     public function update(Request $request, string $id)
     {
         //
+        $anggota = Anggota::find($request->id);
+        $anggota->nama = $request->nama;
+        $anggota->alamat = $request->alamat;
+        $anggota->no_tlp = $request->no_tlp;
+        $anggota->tgl_bergabung = $request->tgl_bergabung;
+        $anggota->email = $request->email;
+        $anggota->username = $request->username;
+        $anggota->password = $request->password;
+        $anggota->save();
+        return redirect('admin/anggota');
+
     }
 
     /**
@@ -73,5 +87,7 @@ class AnggotaController extends Controller
     public function destroy(string $id)
     {
         //
+        DB::table('anggota')->where('id',$id)->delete();
+        return redirect('admin/anggota');
     }
 }
