@@ -19,7 +19,7 @@ use App\Http\Controllers\PengembalianController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('landingpage');
 });
 
 Route::prefix('admin')->group(function(){
