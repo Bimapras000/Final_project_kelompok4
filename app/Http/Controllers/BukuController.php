@@ -32,6 +32,39 @@ class BukuController extends Controller
      */
     public function store(Request $request)
 {
+    $request->validate([
+        'kode' => 'required|unique:buku|max:45',
+        'judulbuku' => 'required|max:45',
+        'penulis' => 'required|max:45',
+        'isbn' => 'required|max:45',
+        'th_terbit' => 'required|numeric',
+        'ket' => 'nullable|string|min:10',
+        'foto' => 'nullable|image|mimes:jpg,jpeg,gif,png,svg|max:2048',
+        'kategori_id' => 'required|integer',
+        'penerbit_id' => 'required|integer',
+    ],
+    [
+        'kode.max' => 'Kode maximal 45 karakter',
+        'kode.required' => 'Kode wabjib diisi',
+        'kode.unique' => 'Kode sudah terisi pada data lain',
+        'judulbuku.required' => 'Judul buku wajib diisi',
+        'judulbuku.max' => 'Judul buku maksimal 45 karakter',
+        'penulis.required' => 'Penulis wajib diisi',
+        'penulis.max' => 'Penulis maksimal 45 karakter',
+        'isbn.required' => 'ISBN wajib diisi',
+        'isbn.max' => 'ISBN maksimal 45 karakter',
+        'th_terbit.required' => 'Th Terbit wajib diisi',
+        'th_terbit.numeric' => 'Th Terbit harus diisi dengan angka',
+        'ket.min' => 'Keterangan minimal diisi 10 kata',
+        'foto.max' => 'Maksimal 2 MB',
+        'foto.image' => 'File ekstensi harus jpg,jpeg,gif,svg',
+        'kategori_id.required' => 'Kategori ID harus diisi',
+        'penerbit_id.required' => 'Penerbit ID harus diisi',
+        
+    ]   
+    
+    );
+
     // Jika ada foto diunggah
     if (!empty($request->foto)) {
         // Buat nama unik untuk file foto
@@ -87,6 +120,36 @@ class BukuController extends Controller
      */
     public function update(Request $request, string $id)
 {
+    $request->validate([
+        'judulbuku' => 'required|max:45',
+        'penulis' => 'required|max:45',
+        'isbn' => 'required|max:45',
+        'th_terbit' => 'required|numeric',
+        'ket' => 'nullable|string|min:10',
+        'foto' => 'nullable|image|mimes:jpg,jpeg,gif,png,svg|max:2048',
+        'kategori_id' => 'required|integer',
+        'penerbit_id' => 'required|integer',
+    ],
+    [
+        'judulbuku.required' => 'Judul buku wajib diisi',
+        'judulbuku.max' => 'Judul buku maksimal 45 karakter',
+        'penulis.required' => 'Penulis wajib diisi',
+        'penulis.max' => 'Penulis maksimal 45 karakter',
+        'isbn.required' => 'ISBN wajib diisi',
+        'isbn.max' => 'ISBN maksimal 45 karakter',
+        'th_terbit.required' => 'Th Terbit wajib diisi',
+        'th_terbit.numeric' => 'Th Terbit harus diisi dengan angka',
+        'ket.min' => 'Keterangan minimal diisi 10 kata',
+        'foto.max' => 'Maksimal 2 MB',
+        'foto.image' => 'File ekstensi harus jpg,jpeg,gif,svg',
+        'kategori_id.required' => 'Kategori ID harus diisi',
+        'penerbit_id.required' => 'Penerbit ID harus diisi',
+        
+    ]   
+    
+    );
+   
+   
     $fileName = '';
 
     if (!empty($request->foto)) {
