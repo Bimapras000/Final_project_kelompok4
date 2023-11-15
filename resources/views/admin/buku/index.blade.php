@@ -70,7 +70,7 @@
                                 <i class="fas fa-trash"></i>
                             </button>
 
-                            <!-- Modal -->
+                            
                             <div class="modal fade" id="exampleModal{{$buku->id}}" tabindex="-1" role="dialog"
                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
@@ -81,14 +81,14 @@
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
-                                        <div class="modal-body">
+                                        <div class="modal-body">    
                                             Apakah anda yakin akan menghapus data {{$buku->judulbuku}}
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-success"
                                                 data-dismiss="modal">Close</button>
                                             <a href="{{url('admin/buku/delete/'.$buku->id)}}"
-                                                class="btn btn-danger">Save changes</a>
+                                                class="btn btn-danger" data-confirm-delete="true">Save changes</a>
                                         </div>
                                     </div>
                                 </div>

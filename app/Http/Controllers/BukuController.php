@@ -14,6 +14,7 @@ class BukuController extends Controller
     {
         //
         $buku = DB::table('buku')->get();
+
         return view ('admin.buku.index', compact('buku'));
     }
 
@@ -90,7 +91,7 @@ class BukuController extends Controller
     ]);
 
     // Redirect ke halaman admin/buku setelah selesai
-    return redirect('admin/buku');
+    return redirect('admin/buku')->with('success', 'Berhasil Menambahkan Data Baru!');
 }
 
     /**
@@ -170,7 +171,7 @@ class BukuController extends Controller
         'penerbit_id' => $request->penerbit_id,
     ]);
 
-    return redirect('admin/buku');
+    return redirect('admin/buku')->with('success', 'Berhasil Update Data!');
 }
 
     /**
@@ -180,6 +181,6 @@ class BukuController extends Controller
     {
         //
         DB::table('buku')->where('id', $id)->delete();
-        return redirect('admin/buku');
+        return redirect('admin/buku')->with('success', 'Data Berhasil DiHapus!');
     }
 }
