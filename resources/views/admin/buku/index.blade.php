@@ -10,6 +10,7 @@
 <div class="card shadow mb-4">
     <div class="card-header py-3">
         <a href="{{url('admin/buku/create')}}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+        <a href="{{url('admin/buku/bukuPDF')}}" class="btn btn-danger"><i class="fas fa-file-pdf"></i></a>
     </div>
     <div class="card-body">
         <div class="table-responsive">
@@ -65,6 +66,8 @@
                                     class="fas fa-eye"></i></a>
                             <a href="{{url('admin/buku/edit/'.$buku->id)}}" class="btn btn-sm btn-warning"><i
                                     class="fas fa-edit"></i></a>
+                            <a href="{{url('admin/buku/pdfshow/'.$buku->id)}}" class="btn btn-sm btn-warning"><i
+                                    class="fas fa-file-pdf"></i></a>
                             <button type="button" class="btn btn-sm btn-danger" data-toggle="modal"
                                 data-target="#exampleModal{{$buku->id}}">
                                 <i class="fas fa-trash"></i>
