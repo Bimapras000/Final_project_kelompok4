@@ -49,7 +49,7 @@
   <div class="form-group row">
       <label for="textarea" class="col-4 col-form-label">Keterangan</label> 
       <div class="col-8">
-        <textarea id="textarea" name="ket" value="{{$b->ket}}" cols="40" rows="5" class="form-control"></textarea>
+        <textarea id="textarea" name="ket"  cols="40" rows="5" class="form-control">{{$b->ket}}</textarea>
       </div>
     </div>
   <div class="form-group row">

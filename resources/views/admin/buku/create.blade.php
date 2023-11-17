@@ -13,6 +13,9 @@
     </ul>
 </div>
 @endif
+
+<div class="card shadow mb-4">
+    <div class="card-body">
 <form method="POST" action="{{url('admin/buku/store')}}" enctype="multipart/form-data">
     @csrf
   <div class="form-group row">
@@ -120,4 +123,6 @@
     </div>
   </div>
 </form>
+</div>
+</div>
 @endsection
