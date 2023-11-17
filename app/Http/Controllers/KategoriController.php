@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Anggota;
+use App\Models\Kategori;
 use Illuminate\Support\Facades\DB;
 
 class KategoriController extends Controller
@@ -13,8 +13,9 @@ class KategoriController extends Controller
      */
     public function index()
     {
-        $anggota = Anggota::all();
-        return view ('admin.anggota.index', compact('anggota'));
+        //
+        $kategori = DB::table('kategori')->get();
+        return view ('admin.kategori.index', compact('kategori'));
     }
 
     /**
@@ -23,26 +24,38 @@ class KategoriController extends Controller
     public function create()
     {
         //
-        return view('admin.anggota.index');
+        $buku = DB::table('kategori')->get();
+        return view ('admin.kategori.create', compact('kategori'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        //
-        $anggota = new Anggota;
-        $anggota->nama = $request->nama;
-        $anggota->alamat = $request->alamat;
-        $anggota->no_tlp = $request->no_tlp;
-        $anggota->tgl_bergabung = $request->tgl_bergabung;
-        $anggota->email = $request->email;
-        $anggota->username = $request->username;
-        $anggota->password = $request->password;
-        $anggota->save();
-        return redirect('admin/anggota');
-    }
+{
+    $request->validate([
+        'id' => 'required|unique:kategori|max:45',
+        'nama' => 'required|max:45',
+    ],
+    [
+        'id.max' => 'id kategori maximal 45 karakter',
+        'id.required' => 'id kategori wabjib diisi',
+        'id.unique' => 'id kategori sudah terisi pada data lain',
+        'nama.required' => 'nama kategori wajib diisi',
+        'nama.max' => 'Nama kategori maksimal 45 karakter',
+    ]   
+    
+    );
+
+    // Masukkan data buku ke tabel buku
+    DB::table('kategori')->insert([
+        'id' => $request->id,
+        'nama' => $request->nama,
+    ]);
+
+    // Redirect ke halaman admin/buku setelah selesai
+    return redirect('admin/kategori');
+}
 
     /**
      * Display the specified resource.
@@ -50,6 +63,10 @@ class KategoriController extends Controller
     public function show(string $id)
     {
         //
+        $buku = DB::table('kategori')
+        ->where('kategori.id', $id)
+        ->get();
+        return view ('admin.kategori.detail', compact('kategori'));
     }
 
     /**
@@ -58,28 +75,37 @@ class KategoriController extends Controller
     public function edit(string $id)
     {
         //
-        $anggota = Anggota::all()->where('id', $id);
-        return view('admin.anggota.edit', compact('anggota'));
+        $buku = DB::table('kategori')->where('id',$id)->get();
+        return view ('admin.kategori.edit', compact('kategori'));
     }
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
-    {
-        //
-        $anggota = Anggota::find($request->id);
-        $anggota->nama = $request->nama;
-        $anggota->alamat = $request->alamat;
-        $anggota->no_tlp = $request->no_tlp;
-        $anggota->tgl_bergabung = $request->tgl_bergabung;
-        $anggota->email = $request->email;
-        $anggota->username = $request->username;
-        $anggota->password = $request->password;
-        $anggota->save();
-        return redirect('admin/anggota');
+{
+    $request->validate([
+        'id' => 'required|unique:kategori|max:45',
+        'nama' => 'required|max:45',
+    ],
+    [
+        'id.max' => 'id kategori maximal 45 karakter',
+        'id.required' => 'id kategori wabjib diisi',
+        'id.unique' => 'id kategori sudah terisi pada data lain',
+        'nama.required' => 'nama kategori wajib diisi',
+        'nama.max' => 'Nama kategori maksimal 45 karakter',
+        
+    ]   
+    
+    );
 
-    }
+    DB::table('kategori')->where('id', $request->id)->update([
+        'id' => $request->id,
+        'nama' => $request->nama,
+    ]);
+
+    return redirect('admin/kategori');
+}
 
     /**
      * Remove the specified resource from storage.
@@ -87,7 +113,7 @@ class KategoriController extends Controller
     public function destroy(string $id)
     {
         //
-        DB::table('anggota')->where('id',$id)->delete();
-        return redirect('admin/anggota');
+        DB::table('kategori')->where('id', $id)->delete();
+        return redirect('admin/kategori');
     }
 }

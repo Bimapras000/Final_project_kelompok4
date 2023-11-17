@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Buku;
 use Illuminate\Support\Facades\DB;
+use PDF;
+
 class BukuController extends Controller
 {
     /**
@@ -14,6 +16,7 @@ class BukuController extends Controller
     {
         //
         $buku = DB::table('buku')->get();
+
         return view ('admin.buku.index', compact('buku'));
     }
 
@@ -90,7 +93,7 @@ class BukuController extends Controller
     ]);
 
     // Redirect ke halaman admin/buku setelah selesai
-    return redirect('admin/buku');
+    return redirect('admin/buku')->with('success', 'Berhasil Menambahkan Data Baru!');
 }
 
     /**
@@ -170,7 +173,7 @@ class BukuController extends Controller
         'penerbit_id' => $request->penerbit_id,
     ]);
 
-    return redirect('admin/buku');
+    return redirect('admin/buku')->with('success', 'Berhasil Update Data!');
 }
 
     /**
@@ -180,6 +183,20 @@ class BukuController extends Controller
     {
         //
         DB::table('buku')->where('id', $id)->delete();
-        return redirect('admin/buku');
+        return redirect('admin/buku')->with('success', 'Data Berhasil DiHapus!');
+    }
+
+    public function bukuPDF(){
+        $buku = DB::table('buku')->get();
+        $pdf = PDF::loadView('admin.buku.bukuPDF', ['buku' => $buku])->setPaper('a4', 'landscape');
+        return $pdf->stream();
+    }
+
+    public function bukuPDF_show(string $id){
+        $buku = DB::table('buku')
+        ->where('buku.id', $id)
+        ->get();
+        $pdf = PDF::loadView('admin.buku.bukuPDF_show', ['buku' => $buku]);
+        return $pdf->stream();
     }
 }
