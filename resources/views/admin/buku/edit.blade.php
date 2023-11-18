@@ -62,18 +62,28 @@
     @endif
   </div>
 </div>
-  <div class="form-group row">
-    <label for="text6" class="col-4 col-form-label">Kategori</label> 
+<div class="form-group row">
+    <label for="select" class="col-4 col-form-label">Kategori</label> 
     <div class="col-8">
-      <input id="text6" name="kategori_id" value="{{$b->kategori_id}}" type="text" class="form-control">
+      <select id="select" name="kategori_id" class="custom-select">
+        @foreach ($kategori as $k)
+        @php $sel = ($k->id == $b->kategori_id) ? 'selected' : ''; @endphp
+        <option value="{{$k->id}}" {{$sel}}>{{$k->nama}}</option>
+        @endforeach
+      </select>
     </div>
-  </div> 
+  </div>
   <div class="form-group row">
-    <label for="text6" class="col-4 col-form-label">Penerbit</label> 
+    <label for="select" class="col-4 col-form-label">Penerbit</label> 
     <div class="col-8">
-      <input id="text6" name="penerbit_id" value="{{$b->penerbit_id}}" type="text" class="form-control">
+      <select id="select" name="penerbit_id" class="custom-select">
+        @foreach ($penerbit as $p)
+        @php $sel = ($p->id == $b->penerbit_id) ? 'selected' : ''; @endphp
+        <option value="{{$p->id}}" {{$sel}}>{{$p->nama}}</option>
+        @endforeach
+      </select>
     </div>
-  </div> 
+  </div>
   <div class="form-group row">
     <div class="offset-4 col-8">
       <button name="submit" type="submit" class="btn btn-warning">Update</button>

@@ -11,6 +11,7 @@
     <div class="card-header py-3">
         <a href="{{url('admin/buku/create')}}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
         <a href="{{url('admin/buku/bukuPDF')}}" class="btn btn-danger"><i class="fas fa-file-pdf"></i></a>
+        <a href="{{url('admin/buku/export')}}" class="btn btn-success"><i class="fas fa-file-excel"></i></a>
     </div>
     <div class="card-body">
         <div class="table-responsive">
@@ -18,15 +19,14 @@
                 <thead>
                     <tr>
                         <th>No</th>
+                        <th>Sampul</th>
                         <th>Kode</th>
                         <th>Judul Buku</th>
                         <th>Penulis</th>
                         <th>ISBN</th>
                         <th>Tahun Terbit</th>
-                        <th>Keterangan</th>
-                        <th>Foto</th>
-                        <th>Kategori ID</th>
-                        <th>Penerbit ID</th>
+                        <th>Kategori</th>
+                        <th>Penerbit</th>
                         <th>Action</th>
 
                     </tr>
@@ -34,15 +34,14 @@
                 <tfoot>
                     <tr>
                         <th>No</th>
+                        <th>Sampul</th>
                         <th>Kode</th>
                         <th>Judul Buku</th>
                         <th>Penulis</th>
                         <th>ISBN</th>
                         <th>Tahun Terbit</th>
-                        <th>Keterangan</th>
-                        <th>Foto</th>
-                        <th>Kategori ID</th>
-                        <th>Penerbit ID</th>
+                        <th>Kategori</th>
+                        <th>Penerbit</th>
                         <th>Action</th>
                     </tr>
                 </tfoot>
@@ -52,15 +51,14 @@
 
                     <tr>
                         <td>{{$no++}}</td>
+                        <td><img src="{{ asset('admin/img/' . $buku->foto) }}" alt="Nama Gambar" style="width: 100px; height: 100px;"></td>
                         <td>{{$buku->kode}}</td>
                         <td>{{$buku->judulbuku}}</td>
                         <td>{{$buku->penulis}}</td>
                         <td>{{$buku->isbn}}</td>
                         <td>{{$buku->th_terbit}}</td>
-                        <td>{{$buku->ket}}</td>
-                        <td>{{$buku->foto}}</td>
-                        <td>{{$buku->kategori_id}}</td>
-                        <td>{{$buku->penerbit_id}}</td>
+                        <td>{{$buku->kategori}}</td>
+                        <td>{{$buku->penerbit}}</td>
                         <td>
                             <a href="{{url('admin/buku/show/'.$buku->id)}}" class="btn btn-sm btn-info"><i
                                     class="fas fa-eye"></i></a>

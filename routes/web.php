@@ -46,5 +46,6 @@ Route::post('/buku/update/{id}',[BukuController::class, 'update']);
 Route::get('/buku/delete/{id}',[BukuController::class, 'destroy']);
 Route::get('/buku/bukuPDF',[BukuController::class, 'bukuPDF']);
 Route::get('/buku/pdfshow/{id}',[BukuController::class, 'bukuPDF_show']);
+Route::get('/buku/export/',[BukuController::class, 'exportBuku']);
 
 });
