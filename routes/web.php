@@ -34,17 +34,18 @@ Route::get('/anggota/edit/{id}',[AnggotaController::class, 'edit']);
 Route::post('/anggota/update/{id}',[AnggotaController::class, 'update']);
 Route::get('/anggota/delete/{id}',[AnggotaController::class, 'destroy']);
 
+//Route Buku
 Route::get('/petugas',[PetugasController::class, 'index']);
 Route::get('/buku',[BukuController::class, 'index']);
 Route::get('/buku/create',[BukuController::class, 'create']);
 Route::post('/buku/store',[BukuController::class, 'store']);
-Route::get('/Pengembalian',[PengembalianController::class, 'index']);
-
 Route::get('/buku/show/{id}',[BukuController::class, 'show']);
 Route::get('/buku/edit/{id}',[BukuController::class, 'edit']);
 Route::post('/buku/update/{id}',[BukuController::class, 'update']);
 Route::get('/buku/delete/{id}',[BukuController::class, 'destroy']);
 Route::get('/buku/bukuPDF',[BukuController::class, 'bukuPDF']);
 Route::get('/buku/pdfshow/{id}',[BukuController::class, 'bukuPDF_show']);
+
+Route::get('/pengembalian',[PengembalianController::class, 'index']);
 
 });

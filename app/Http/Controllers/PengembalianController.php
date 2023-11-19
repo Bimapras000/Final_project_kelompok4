@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Anggota;
+use App\Models\Pengembalian;
 
 class PengembalianController extends Controller
 {
@@ -12,8 +13,8 @@ class PengembalianController extends Controller
      */
     public function index()
     {
-        $Pengembalian = Pengembalian::all();
-        return view ('admin.Pengembalian.index', compact('Pengembalian'));
+        $pengembalian = Pengembalian::all();
+        return view ('admin.pengembalian.index', compact('pengembalian'));
     }
 
     /**

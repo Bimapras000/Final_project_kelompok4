@@ -89,7 +89,7 @@
                         <h6 class="collapse-header">Custom Buku:</h6>
                         <a class="collapse-item" href="{{ url('/admin/buku') }}">Buku</a>
                         <a class="collapse-item" href="#">Kategori</a>
-                        <a class="collapse-item" href="#">Penerbit</a>
+             
 
                     </div>
                 </div>
