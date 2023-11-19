@@ -35,8 +35,8 @@
                 <th>ISBN</th>
                 <th>Tahun Terbit</th>
                 <th>Keterangan</th>
-                <th>Kategori ID</th>
-                <th>Penerbit ID</th>
+                <th>Kategori</th>
+                <th>Penerbit</th>
             </tr>
         </thead>
         <tbody>
@@ -50,8 +50,8 @@
                 <td>{{$buku->isbn}}</td>
                 <td>{{$buku->th_terbit}}</td>
                 <td>{{$buku->ket}}</td>
-                <td>{{$buku->kategori_id}}</td>
-                <td>{{$buku->penerbit_id}}</td>
+                <td>{{$buku->kategori}}</td>
+                <td>{{$buku->penerbit}}</td>
             </tr>
             @endforeach
         </tbody>

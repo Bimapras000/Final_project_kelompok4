@@ -95,28 +95,36 @@
             @enderror
   </div>
 </div>
-  <div class="form-group row">
-    <label for="text6" class="col-4 col-form-label">Kategori</label> 
+<div class="form-group row">
+    <label for="select" class="col-4 col-form-label">Kategori</label> 
     <div class="col-8">
-      <input id="text6" name="kategori_id" type="text" class="form-control @error('kategori_id') is-invalid @enderror">
+      <select id="select" name="kategori_id" class="custom-select @error('kategori_id') is-invalid @enderror">
+        @foreach ($kategori as $k)
+        <option value="{{$k->id}}">{{$k->nama}}</option>
+        @endforeach
+      </select>
       @error('kategori_id')
-            <div class="invalid-feedback">
-                {{$message}}
-            </div>
-            @enderror
+      <div class="invalid-feedback">
+      {{$message}}
+      </div>
+      @enderror
     </div>
-  </div> 
+  </div>
   <div class="form-group row">
-    <label for="text6" class="col-4 col-form-label">Penerbit</label> 
+    <label for="select" class="col-4 col-form-label">Penerbit</label> 
     <div class="col-8">
-      <input id="text6" name="penerbit_id" type="text" class="form-control @error('penerbit_id') is-invalid @enderror">
+      <select id="select" name="penerbit_id" class="custom-select @error('penerbit_id') is-invalid @enderror">
+        @foreach ($penerbit as $p)
+        <option value="{{$p->id}}">{{$p->nama}}</option>
+        @endforeach
+      </select>
       @error('penerbit_id')
-            <div class="invalid-feedback">
-                {{$message}}
-            </div>
-            @enderror
+      <div class="invalid-feedback">
+      {{$message}}
+      </div>
+      @enderror
     </div>
-  </div> 
+  </div>
   <div class="form-group row">
     <div class="offset-4 col-8">
       <button name="submit" type="submit" class="btn btn-primary">Submit</button>

@@ -21,8 +21,8 @@
                     <p><strong>ISBN:</strong> {{$b->isbn}}</p>
                     <p><strong>Tahun Terbit:</strong> {{$b->th_terbit}}</p>
                     <p><strong>Deskripsi:</strong> {{$b->ket}}</p>
-                    <p><strong>Kategori:</strong> {{$b->kategori_id}}</p>
-                    <p><strong>Penerbit:</strong> {{$b->penerbit_id}}</p>
+                    <p><strong>Kategori:</strong> {{$b->kategori}}</p>
+                    <p><strong>Penerbit:</strong> {{$b->penerbit}}</p>
                 </div>
             </div>
         </div>

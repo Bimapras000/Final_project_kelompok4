@@ -76,11 +76,11 @@
         </tr>
         <tr>
             <td>Kategori ID</td>
-            <td>: {{$buku->kategori_id}}</td>
+            <td>: {{$buku->kategori}}</td>
         </tr>
         <tr>
             <td>Penerbit ID</td>
-            <td>: {{$buku->penerbit_id}}</td>
+            <td>: {{$buku->penerbit}}</td>
         </tr>
     </table>
     @endforeach

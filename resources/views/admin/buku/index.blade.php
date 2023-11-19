@@ -11,6 +11,7 @@
     <div class="card-header py-3">
         <a href="{{url('admin/buku/create')}}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
         <a href="{{url('admin/buku/bukuPDF')}}" class="btn btn-danger"><i class="fas fa-file-pdf"></i></a>
+        <a href="{{url('admin/buku/export')}}" class="btn btn-success"><i class="fas fa-file-excel"></i></a>
     </div>
     <div class="card-body">
         <div class="table-responsive">
@@ -56,8 +57,8 @@
                         <td>{{$buku->penulis}}</td>
                         <td>{{$buku->isbn}}</td>
                         <td>{{$buku->th_terbit}}</td>
-                        <td>{{$buku->kategori_id}}</td>
-                        <td>{{$buku->penerbit_id}}</td>
+                        <td>{{$buku->kategori}}</td>
+                        <td>{{$buku->penerbit}}</td>
                         <td>
                             <a href="{{url('admin/buku/show/'.$buku->id)}}" class="btn btn-sm btn-info"><i
                                     class="fas fa-eye"></i></a>

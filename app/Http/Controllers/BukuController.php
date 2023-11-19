@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Buku;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\BukuExport;
 use PDF;
 
 class BukuController extends Controller
@@ -15,8 +17,10 @@ class BukuController extends Controller
     public function index()
     {
         //
-        $buku = DB::table('buku')->get();
-
+        $buku = Buku::join('penerbit','penerbit_id','=','penerbit.id')
+        ->join('kategori','kategori_id','=','kategori.id')
+        ->select('buku.*','penerbit.nama as penerbit','kategori.nama as kategori')
+        ->get();
         return view ('admin.buku.index', compact('buku'));
     }
 
@@ -26,8 +30,9 @@ class BukuController extends Controller
     public function create()
     {
         //
-        $buku = DB::table('buku')->get();
-        return view ('admin.buku.create', compact('buku'));
+        $kategori = DB::table('kategori')->get();
+        $penerbit = DB::table('penerbit')->get();
+        return view ('admin.buku.create', compact('kategori','penerbit'));
     }
 
     /**
@@ -102,7 +107,9 @@ class BukuController extends Controller
     public function show(string $id)
     {
         //
-        $buku = DB::table('buku')
+        $buku = Buku::join('penerbit','penerbit_id','=','penerbit.id')
+        ->join('kategori','kategori_id','=','kategori.id')
+        ->select('buku.*','penerbit.nama as penerbit','kategori.nama as kategori')
         ->where('buku.id', $id)
         ->get();
         return view ('admin.buku.detail', compact('buku'));
@@ -114,8 +121,10 @@ class BukuController extends Controller
     public function edit(string $id)
     {
         //
+        $kategori = DB::table('kategori')->get();
+        $penerbit = DB::table('penerbit')->get();
         $buku = DB::table('buku')->where('id',$id)->get();
-        return view ('admin.buku.edit', compact('buku'));
+        return view ('admin.buku.edit', compact('buku','kategori','penerbit'));
     }
 
     /**
@@ -187,16 +196,26 @@ class BukuController extends Controller
     }
 
     public function bukuPDF(){
-        $buku = DB::table('buku')->get();
+        $buku = Buku::join('penerbit','penerbit_id','=','penerbit.id')
+        ->join('kategori','kategori_id','=','kategori.id')
+        ->select('buku.*','penerbit.nama as penerbit','kategori.nama as kategori')
+        ->get();
         $pdf = PDF::loadView('admin.buku.bukuPDF', ['buku' => $buku])->setPaper('a4', 'landscape');
         return $pdf->stream();
     }
 
     public function bukuPDF_show(string $id){
-        $buku = DB::table('buku')
+        $buku = Buku::join('penerbit','penerbit_id','=','penerbit.id')
+        ->join('kategori','kategori_id','=','kategori.id')
+        ->select('buku.*','penerbit.nama as penerbit','kategori.nama as kategori')
         ->where('buku.id', $id)
         ->get();
         $pdf = PDF::loadView('admin.buku.bukuPDF_show', ['buku' => $buku]);
         return $pdf->stream();
+    }
+
+    public function exportBuku(){
+        
+        return Excel::download(new BukuExport, 'buku.xlsx');
     }
 }
