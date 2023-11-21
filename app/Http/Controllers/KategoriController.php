@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Kategori;
 use Illuminate\Support\Facades\DB;
+use PDF;
 
 class KategoriController extends Controller
 {
@@ -24,7 +25,7 @@ class KategoriController extends Controller
     public function create()
     {
         //
-        $buku = DB::table('kategori')->get();
+        $kategori = DB::table('kategori')->get();
         return view ('admin.kategori.create', compact('kategori'));
     }
 
@@ -34,13 +35,11 @@ class KategoriController extends Controller
     public function store(Request $request)
 {
     $request->validate([
-        'id' => 'required|unique:kategori|max:45',
-        'nama' => 'required|max:45',
+
+        'nama' => 'required|unique:kategori|max:45',
     ],
     [
-        'id.max' => 'id kategori maximal 45 karakter',
-        'id.required' => 'id kategori wabjib diisi',
-        'id.unique' => 'id kategori sudah terisi pada data lain',
+        'nama.unique' => 'nama kategori sudah terisi pada data lain',
         'nama.required' => 'nama kategori wajib diisi',
         'nama.max' => 'Nama kategori maksimal 45 karakter',
     ]   
@@ -49,12 +48,11 @@ class KategoriController extends Controller
 
     // Masukkan data buku ke tabel buku
     DB::table('kategori')->insert([
-        'id' => $request->id,
         'nama' => $request->nama,
     ]);
 
     // Redirect ke halaman admin/buku setelah selesai
-    return redirect('admin/kategori');
+    return redirect('admin/kategori')->with('success', 'Berhasil Menambahkan Kategori');
 }
 
     /**
@@ -63,7 +61,7 @@ class KategoriController extends Controller
     public function show(string $id)
     {
         //
-        $buku = DB::table('kategori')
+        $kategori = DB::table('kategori')
         ->where('kategori.id', $id)
         ->get();
         return view ('admin.kategori.detail', compact('kategori'));
@@ -75,7 +73,7 @@ class KategoriController extends Controller
     public function edit(string $id)
     {
         //
-        $buku = DB::table('kategori')->where('id',$id)->get();
+        $kategori = DB::table('kategori')->where('id',$id)->get();
         return view ('admin.kategori.edit', compact('kategori'));
     }
 
@@ -85,13 +83,10 @@ class KategoriController extends Controller
     public function update(Request $request, string $id)
 {
     $request->validate([
-        'id' => 'required|unique:kategori|max:45',
         'nama' => 'required|max:45',
     ],
     [
-        'id.max' => 'id kategori maximal 45 karakter',
-        'id.required' => 'id kategori wabjib diisi',
-        'id.unique' => 'id kategori sudah terisi pada data lain',
+        'nama.unique' => 'nama kategori sudah terisi pada data lain',
         'nama.required' => 'nama kategori wajib diisi',
         'nama.max' => 'Nama kategori maksimal 45 karakter',
         
@@ -100,11 +95,10 @@ class KategoriController extends Controller
     );
 
     DB::table('kategori')->where('id', $request->id)->update([
-        'id' => $request->id,
         'nama' => $request->nama,
     ]);
 
-    return redirect('admin/kategori');
+    return redirect('admin/kategori')->with('success', 'Berhasil Mengedit Kategori');;
 }
 
     /**
@@ -114,6 +108,12 @@ class KategoriController extends Controller
     {
         //
         DB::table('kategori')->where('id', $id)->delete();
-        return redirect('admin/kategori');
+        return redirect('admin/kategori')->with('success', 'Kategori Berhasil DiHapus!');;
+    }
+
+    public function kategoriPDF(){
+        $kategori = Kategori::get();
+        $pdf = PDF::loadView('admin.kategori.kategoriPDF', ['kategori' => $kategori])->setPaper('a4', 'landscape');
+        return $pdf->stream();
     }
 }

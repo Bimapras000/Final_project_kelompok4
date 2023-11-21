@@ -10,10 +10,10 @@ class Kategori extends Model
     use HasFactory;
 
         
-        protected $table = 'Kategori';
+        protected $table = 'kategori';
         
         protected $fillable = [
-            'Sejarah','Sains','Ekonomi','Fiksi','NonFiksi','Komik','Ensiklopedia','Biografi'
+            'nama'
         ];
         public $timestamps = false;
     

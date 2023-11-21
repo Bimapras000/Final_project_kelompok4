@@ -10,6 +10,7 @@
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
                             <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#tambahDataModal">Tambah Data</a>
+                            <a href="{{url('admin/anggota/anggotaPDF')}}" class="btn btn-danger"><i class="fas fa-file-pdf"></i></a>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -107,31 +108,66 @@
                                 
                                 <div class="mb-3">
                                     <label for="recipient-name" class="col-form-label">Nama :</label>
-                                    <input type="text" name="nama" class="form-control" id="recipient-name" required>
+                                    <input type="text" name="nama" class="form-control @error('nama') is-invalid @enderror" id="recipient-name" >
+                                    @error('nama')
+                                        <div class="invalid-feedback">
+                                            {{$message}}
+                                        </div>
+                                    @enderror
                                 </div>
                                 <div class="mb-3">
                                     <label for="recipient-name" class="col-form-label">Alamat :</label>
-                                    <input type="text" name="alamat" class="form-control" id="recipient-name" required>
+                                    <input type="text" name="alamat" class="form-control @error('alamat') is-invalid @enderror" id="recipient-name" >
+                                    @error('alamat')
+                                        <div class="invalid-feedback">
+                                            {{$message}}
+                                        </div>
+                                    @enderror
                                 </div>
                                 <div class="mb-3">
                                     <label for="recipient-name" class="col-form-label">Nomor Telepon :</label>
-                                    <input type="text" name="no_tlp" class="form-control" id="recipient-name" required>
+                                    <input type="text" name="no_tlp" class="form-control @error('no_tlp') is-invalid @enderror" id="recipient-name" >
+                                    @error('no_tlp')
+                                        <div class="invalid-feedback">
+                                            {{$message}}
+                                        </div>
+                                    @enderror
                                 </div>
                                 <div class="mb-3">
                                     <label for="recipient-name" class="col-form-label">Tanggal Bergabung :</label>
-                                    <input type="date" name="tgl_bergabung" class="form-control" id="recipient-name" required>
+                                    <input type="date" name="tgl_bergabung" class="form-control @error('tgl_bergabung') is-invalid @enderror" id="recipient-name"  >
+                                    @error('tgl_bergabung')
+                                        <div class="invalid-feedback">
+                                            {{$message}}
+                                        </div>
+                                    @enderror
                                 </div>
                                 <div class="mb-3">
                                     <label for="recipient-name" class="col-form-label">Email :</label>
-                                    <input type="email" name="email" class="form-control" id="recipient-name" required>
+                                    <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" id="recipient-name" >
+                                    @error('email')
+                                        <div class="invalid-feedback">
+                                            {{$message}}
+                                        </div>
+                                    @enderror
                                 </div>
                                 <div class="mb-3">
                                     <label for="recipient-name" class="col-form-label">Username :</label>
-                                    <input type="text" name="username" class="form-control" id="recipient-name" required>
+                                    <input type="text" name="username" class="form-control @error('username') is-invalid @enderror" id="recipient-name" >
+                                    @error('username')
+                                        <div class="invalid-feedback">
+                                            {{$message}}
+                                        </div>
+                                    @enderror
                                 </div>
                                 <div class="mb-3">
                                     <label for="recipient-name" class="col-form-label">Password :</label>
-                                    <input type="password" name="password" class="form-control" id="recipient-name" required>
+                                    <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" id="recipient-name" >
+                                    @error('password')
+                                        <div class="invalid-feedback">
+                                            {{$message}}
+                                        </div>
+                                    @enderror
                                 </div>
                                 
                             </div>

@@ -14,7 +14,7 @@ class Petugas extends Model
     protected $fillable = [
         'nama','email','username','password'
     ];
-    
+    public $timestamps = false;
 
     public function peminjaman(){
         return $this->hasMany(Peminjaman::class);

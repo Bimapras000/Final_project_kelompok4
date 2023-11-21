@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Anggota;
 use Illuminate\Support\Facades\DB;
+use PDF;
+
 
 class AnggotaController extends Controller
 {
@@ -32,16 +34,45 @@ class AnggotaController extends Controller
     public function store(Request $request)
     {
         //
-        $anggota = new Anggota;
-        $anggota->nama = $request->nama;
-        $anggota->alamat = $request->alamat;
-        $anggota->no_tlp = $request->no_tlp;
-        $anggota->tgl_bergabung = $request->tgl_bergabung;
-        $anggota->email = $request->email;
-        $anggota->username = $request->username;
-        $anggota->password = $request->password;
-        $anggota->save();
-        return redirect('admin/anggota');
+        $request->validate([
+            'nama' => 'required|max:45',
+            'alamat' => 'required|max:45',
+            'no_tlp' => 'required|max:13',
+            'tgl_bergabung' => 'required',
+            'email' => 'required|max:50',
+            'username' => 'required|max:45',
+            'password' => 'required|min:8',
+        ],
+        [
+            'nama.max' => 'Nama maximal 45 karakter',
+            'nama.required' => 'Nama wabjib diisi',
+            
+            'alamat.required' => 'Alamat wajib diisi',
+            'alamat.max' => 'Alamat maksimal 45 karakter',
+            'no_tlp.required' => 'Nomor Telepon wajib diisi',
+            'no_tlp.max' => 'Nomor Telepon maksimal 13 karakter',
+            'tgl_bergabung.required' => 'Tanggal Bergabung wajib diisi',
+            
+            'email.required' => 'Email wajib diisi',
+            'email.max' => 'Email maksimal 50 karakter',
+            'username.required' => 'Username wajib diisi',
+            'username.max' => 'username maksimal 45 karakter',
+            'password.required' => 'Password harus diisi',
+            'password.min' => 'Password minimal 8 karakter',
+            
+        ]);
+
+        DB::table('anggota')->insert([
+        'nama' => $request->nama,
+        'alamat' => $request->alamat,
+        'no_tlp' => $request->no_tlp,
+        'tgl_bergabung' => $request->tgl_bergabung,
+        'email' => $request->email,
+        'username' => $request->username,
+        'password' => $request->password,
+
+        ]);
+        return redirect('admin/anggota')->with('success', 'Berhasil Menambahkan Anggota');
     }
 
     /**
@@ -88,6 +119,12 @@ class AnggotaController extends Controller
     {
         //
         DB::table('anggota')->where('id',$id)->delete();
-        return redirect('admin/anggota');
+        return redirect('admin/anggota')->with('success', 'Anggota Berhasil Dihapus!');;
+    }
+
+    public function anggotaPDF(){
+        $anggota = Anggota::get();
+        $pdf = PDF::loadView('admin.anggota.anggotaPDF', ['anggota' => $anggota])->setPaper('a4', 'landscape');
+        return $pdf->stream();
     }
 }
