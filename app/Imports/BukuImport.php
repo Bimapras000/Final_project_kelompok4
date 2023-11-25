@@ -16,6 +16,13 @@ class BukuImport implements ToModel
     {
         return new Buku([
             //
+            'kode' => $row[1],
+            'judulbuku' => $row[2],
+            'penulis' => $row[3],
+            'isbn' => $row[4],
+            'th_terbit' => $row[5],
+            'kategori' => $row[6],
+            'penerbit' => $row[7],
         ]);
     }
 }

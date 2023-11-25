@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\BukuExport;
 use PDF;
+use App\Imports\BukuImport;
 
 class BukuController extends Controller
 {
@@ -217,5 +218,15 @@ class BukuController extends Controller
     public function exportBuku(){
         
         return Excel::download(new BukuExport, 'buku.xlsx');
+    }
+    public function importBuku(Request $request) 
+    {
+        // Excel::import(new ProdukImport, 'produk.xlsx');
+        // $file = $request->file('file');
+        // $nama_file = rand().$file->getClientOriginalName();
+        // $file->move('file_excel', $nama_file);
+        Excel::import(new BukuImport, $request->file('file')->store('temp'));
+        
+        return redirect('admin/buku')->with('success', 'Buku Berhasil Diimport!');
     }
 }
