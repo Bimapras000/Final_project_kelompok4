@@ -23,6 +23,8 @@ Route::get('/', function () {
     return view('landingpage');
 });
 
+Route::get('/user',[DashboardController::class, 'index']);
+
 Route::prefix('admin')->group(function(){
 
 Route::get('/dashboard',[DashboardController::class, 'index']);
