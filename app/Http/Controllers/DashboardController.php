@@ -21,6 +21,13 @@ class DashboardController extends Controller
         $petugas = Petugas::count();
         // $peminjaman = Peminjaman::count();
         $pengembalian = Pengembalian::count();
-        return view('admin.dashboard', compact('anggota','buku','kategori','petugas','pengembalian'));
+        $judulbuku = DB::table('buku')
+        ->selectRaw('judulbuku, count(judulbuku) as jumlah')
+        ->groupBy('judulbuku')
+        ->get();
+        $hitung_anggota = DB::table('anggota')->select('nama', 'tgl_bergabung')->get();
+
+        return view('admin.dashboard', compact('anggota', 'buku', 'kategori', 'petugas', 'pengembalian', 'judulbuku', 'hitung_anggota'));
+
     }
 }

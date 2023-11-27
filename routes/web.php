@@ -49,6 +49,7 @@ Route::get('/buku/delete/{id}',[BukuController::class, 'destroy']);
 Route::get('/buku/bukuPDF',[BukuController::class, 'bukuPDF']);
 Route::get('/buku/pdfshow/{id}',[BukuController::class, 'bukuPDF_show']);
 Route::get('/buku/export/',[BukuController::class, 'exportBuku']);
+Route::post('/buku/import/', [BukuController::class, 'importBuku']);
 
 //Route Pengembalian
 Route::get('/pengembalian',[PengembalianController::class, 'index']);
