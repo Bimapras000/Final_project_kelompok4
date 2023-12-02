@@ -8,7 +8,6 @@ use App\Http\Controllers\PetugasController;
 use App\Http\Controllers\BukuController;
 use App\Http\Controllers\PengembalianController;
 use App\Http\Controllers\KategoriController;
-use App\Http\Controllers\DetailsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,7 +22,6 @@ use App\Http\Controllers\DetailsController;
 
 
 Route::get('/', [LandingController::class, 'index']);
-Route::get('/details/{id}',[DetailsController::class, 'details'])->name('details');
 // Route::get('/show/{id}',[LandingController::class, 'show']);
 Route::prefix('admin')->group(function(){
 
