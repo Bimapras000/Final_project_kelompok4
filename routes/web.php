@@ -2,11 +2,13 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\LandingController;
 use App\Http\Controllers\AnggotaController;
 use App\Http\Controllers\PetugasController;
 use App\Http\Controllers\BukuController;
 use App\Http\Controllers\PengembalianController;
 use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\DetailsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,13 +21,15 @@ use App\Http\Controllers\KategoriController;
 |
 */
 
-Route::get('/', function () {
-    return view('landingpage');
-});
 
+Route::get('/', [LandingController::class, 'index']);
+Route::get('/details/{id}',[DetailsController::class, 'details'])->name('details');
+// Route::get('/show/{id}',[LandingController::class, 'show']);
 Route::prefix('admin')->group(function(){
 
 Route::get('/dashboard',[DashboardController::class, 'index']);
+
+
 
 // route anggota
 Route::get('/anggota',[AnggotaController::class, 'index']);
