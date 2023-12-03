@@ -7,6 +7,9 @@ use App\Http\Controllers\PetugasController;
 use App\Http\Controllers\BukuController;
 use App\Http\Controllers\PengembalianController;
 use App\Http\Controllers\KategoriController;
+// use App\Http\Controllers\PeminjamanController;
+use App\Http\Controllers\UserController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -20,10 +23,11 @@ use App\Http\Controllers\KategoriController;
 */
 
 Route::get('/', function () {
-    return view('landingpage');
+    return view('welcome');
 });
 
-Route::get('/user',[DashboardController::class, 'index']);
+Route::resource('/user',UserController::class);
+// Route::get('/user/search', [UserController::class, 'search'])->name('user.search');
 
 Route::prefix('admin')->group(function(){
 
@@ -71,4 +75,8 @@ Route::get('/kategori/edit/{id}',[KategoriController::class, 'edit']);
 Route::post('/kategori/update/{id}',[KategoriController::class, 'update']);
 Route::get('/kategori/delete/{id}',[KategoriController::class, 'destroy']);
 Route::get('/kategori/kategoriPDF',[KategoriController::class, 'kategoriPDF']);
+
+//Route Peminjaman
+// Route::get('/peminjaman',[PeminjamanController::class, 'index']);
+
 });

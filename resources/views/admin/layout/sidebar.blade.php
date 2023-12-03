@@ -105,7 +105,7 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Custom Aktivis:</h6>
-                        <a class="collapse-item" href="#">Peminjaman</a>
+                        <a class="collapse-item" href="{{ url('/admin/peminjaman') }}">Peminjaman</a>
                         <a class="collapse-item" href="{{ url('/admin/pengembalian') }}">Pengembalian</a>
              
 
