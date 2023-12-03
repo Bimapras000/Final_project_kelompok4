@@ -2,14 +2,13 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\LandingController;
 use App\Http\Controllers\AnggotaController;
 use App\Http\Controllers\PetugasController;
 use App\Http\Controllers\BukuController;
 use App\Http\Controllers\PengembalianController;
 use App\Http\Controllers\KategoriController;
-// use App\Http\Controllers\PeminjamanController;
-use App\Http\Controllers\UserController;
-
+use App\Http\Controllers\DetailsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,15 +22,16 @@ use App\Http\Controllers\UserController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('landingpage');
 });
 
-Route::resource('/user',UserController::class);
-// Route::get('/user/search', [UserController::class, 'search'])->name('user.search');
+Route::get('/user',[DashboardController::class, 'index']);
 
 Route::prefix('admin')->group(function(){
 
 Route::get('/dashboard',[DashboardController::class, 'index']);
+
+
 
 // route anggota
 Route::get('/anggota',[AnggotaController::class, 'index']);
