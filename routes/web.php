@@ -21,9 +21,8 @@ use App\Http\Controllers\DetailsController;
 |
 */
 
-Route::get('/', function () {
-    return view('landingpage');
-});
+Route::get('/', [LandingController::class, 'index']);
+Route::get('/details/{id}',[DetailsController::class, 'details'])->name('details');
 
 Route::get('/user',[DashboardController::class, 'index']);
 
