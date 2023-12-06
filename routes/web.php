@@ -9,6 +9,7 @@ use App\Http\Controllers\BukuController;
 use App\Http\Controllers\PengembalianController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\DetailsController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,11 +22,16 @@ use App\Http\Controllers\DetailsController;
 |
 */
 
-Route::get('/', function () {
-    return view('landingpage');
-});
+// Route::get('/', function () {
+//     return view('landingpage');
+// });
 
-Route::get('/user',[DashboardController::class, 'index']);
+Route::get('/',[LandingController::class, 'index']);
+Route::get('details/{id}',[DetailsController::class, 'details'])->name('details');
+
+Route::resource('/tampiluser', UserController::class);
+
+// Route::get('/user',[DashboardController::class, 'index']);
 
 Route::prefix('admin')->group(function(){
 
@@ -80,3 +86,6 @@ Route::get('/kategori/kategoriPDF',[KategoriController::class, 'kategoriPDF']);
 // Route::get('/peminjaman',[PeminjamanController::class, 'index']);
 
 });
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -427,7 +427,7 @@
               <img src="{{url('admin/assets/img/Bima.jpg')}}" class="img-fluid" alt="">
               <div class="member-info">
                 <div class="member-info-content">
-                  <h4>Bima Prasetya</h4>
+                  <h4>Bima Prasetiya</h4>
                   <span>Fullstack Web Developer</span>
                   <!-- <div class="social">
                     <a href=""><i class="bi bi-twitter"></i></a>

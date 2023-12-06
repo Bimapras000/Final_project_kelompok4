@@ -25,6 +25,8 @@
   <!-- Template Main CSS File -->
   <link href="{{url('admin/assets/css/style.css')}}" rel="stylesheet">
 
+  
+
   <!-- =======================================================
   * Template Name: Rapid
   * Updated: Sep 18 2023 with Bootstrap v5.3.2

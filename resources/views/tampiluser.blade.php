@@ -25,13 +25,6 @@
   </head>
   <body>
 
-    <div class="preloader-wrapper">
-      <div class="preloader">
-      </div>
-    </div>
-
-
-
     <section class="site-banner jarallax min-height300 padding-large" style="background: url({{asset('usercss/images/back.jpg')}}) no-repeat; background-position: top; ">
       <div class="container">
         <div class="row">
@@ -75,9 +68,6 @@
                             <i class="icon icon-screen-full"></i>
                             <span class="tooltip-text">Quick view</span>
                           </button>
-                          <button type="button" class="wishlist-btn">
-                            <i class="icon icon-heart"></i>
-                          </button>
                         </div>
                       </div>
                       <div class="product-detail">
@@ -116,55 +106,30 @@
             <div class="sidebar">
               <div class="widgets widget-menu">
                 <div class="widget-search-bar">
-                  <!-- <form role="search" method="get" class="d-flex">
-                    <input class="search-field" placeholder="Search" type="text">
+                  <form role="search" action="{{ route('tampiluser.index') }}" method="get">
+                    <input class="form-control" placeholder="Search" type="text" name="judul" id="judul">
                     <button class="btn btn-dark"><i class="icon icon-search"></i></button>
+                  </form>
+                  <!-- <form action="{{ route('tampiluser.index') }}" method="get">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Masukkan Nama..." name="judul" id="judul">
+                        <button class="btn btn-outline-secondary" type="submit">Search</button>
+                    </div>
                   </form> -->
-                  <form action="{{ route('user.index') }}" method="get">
-                <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Masukkan Nama..." name="judul" id="judul">
-                    <button class="btn btn-outline-secondary" type="submit">Search</button>
-                </div>
-            </form>
                 </div> 
               </div>
+              
               <div class="widgets widget-product-tags">
-                <h5 class="widget-title">Tags</h5>
+                <h5 class="widget-title">Kategori</h5>
+                @foreach ($buku as $bukus)
                 <ul class="product-tags sidebar-list list-unstyled">
                   <li class="tags-item">
-                    <a href="">White</a>
+                    <a href="">{{$bukus->kategori_id}}</a>
                   </li>
-                  <li class="tags-item">
-                    <a href="">Cheap</a>
-                  </li>
-                  <li class="tags-item">
-                    <a href="">Branded</a>
-                  </li>
-                  <li class="tags-item">
-                    <a href="">Modern</a>
-                  </li>
-                  <li class="tags-item">
-                    <a href="">Simple</a>
-                  </li>
+
                 </ul>
               </div>
-              <div class="widgets widget-product-brands">
-                <h5 class="widget-title">Brands</h5>
-                <ul class="product-tags sidebar-list list-unstyled">
-                  <li class="tags-item">
-                    <a href="">Nike</a>
-                  </li>
-                  <li class="tags-item">
-                    <a href="">Adidas</a>
-                  </li>
-                  <li class="tags-item">
-                    <a href="">Puma</a>
-                  </li>
-                  <li class="tags-item">
-                    <a href="">Spike</a>
-                  </li>
-                </ul>
-              </div>
+              @endforeach
             </div>
           </aside>
           

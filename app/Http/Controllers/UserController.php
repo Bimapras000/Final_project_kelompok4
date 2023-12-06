@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Buku;
+use App\Models\Kategori;
+use DB;
+
 
 
 class UserController extends Controller
@@ -51,6 +54,10 @@ class UserController extends Controller
     // }
 
     public function index(Request $request){
+
+        // $kategori = DB::table('kategori')->get();
+        // return view ('tampiluser', compact('kategori'));
+
         $judul = $request->input('judul'); // Mengambil nilai dari input 'judul'
     
         if($judul){ // Jika 'judul' ada dalam request
@@ -59,7 +66,7 @@ class UserController extends Controller
             $buku = Buku::paginate(5);
         }
     
-        return view('user', compact('buku'));
+        return view('tampiluser', compact('buku'));
     }
     
 
