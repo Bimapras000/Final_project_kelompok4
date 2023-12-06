@@ -22,9 +22,8 @@ use App\Http\Controllers\UserController;
 |
 */
 
-// Route::get('/', function () {
-//     return view('landingpage');
-// });
+Route::get('/', [LandingController::class, 'index']);
+Route::get('/details/{id}',[DetailsController::class, 'details'])->name('details');
 
 Route::get('/',[LandingController::class, 'index']);
 Route::get('details/{id}',[DetailsController::class, 'details'])->name('details');
