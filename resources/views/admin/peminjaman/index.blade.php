@@ -18,42 +18,47 @@
                                     <thead>
                     <tr>
                         <th>NO</th>
-                        <th>ID Peminjaman</th>
+                        <th>Kode Peminjaman</th>
+                        <<th>Nama Peminjam</th>
+                        <th>Judul Buku</th>
                         <th>Tanggal Peminjaman</th>
                         <th>Tanggal Pengembalian</th>
-                        <th>Status Peminjaman</th>
-                        <th>Nama Anggota</th>
-                        <th>Judul Buku</th>
+                        <th>Status</th>
+                        <th>Konfirmasi</th>
+                        <th>Action</th>
 
                     </tr>
                 </thead>
                 <tfoot>
                     <tr>
                         <th>NO</th>
-                        <th>ID Peminjaman</th>
+                        <th>Kode Peminjaman</th>
+                        <th>Nama Peminjam</th>
+                        <th>Judul Buku</th>
                         <th>Tanggal Peminjaman</th>
                         <th>Tanggal Pengembalian</th>
-                        <th>Status Peminjaman</th>
-                        <th>Nama Anggota</th>
-                        <th>Judul Buku</th>
+                        <th>Status</th>
+                        <th>Konfirmasi</th>
+                        <th>Action</th>
 
                     </tr>
                 </tfoot>
                 <tbody>
                     @php $no=1 @endphp
-                    @foreach ($data_peminjaman as $peminjaman)
+                    @foreach ($peminjaman as $peminjaman)
 
                     <tr>
                         <td>{{$no++}}</td>
                         <td>{{$peminjaman->kode}}</td>
+                        <td>{{$peminjaman->name}}</td>
+                        <td>{{$peminjaman->buku}}</td>
                         <td>{{$peminjaman->tgl_peminjaman}}</td>
                         <td>{{$peminjaman->tgl_pengembalian}}</td>
-                        <td>{{$peminjaman->status_pinjaman}}</td>
-                        <td>{{$peminjaman->nama_anggota}}</td>
-                        <td>{{$peminjaman->judul_buku}}</td>
+                        <td>{{$peminjaman->status}}</td>
+                        <td>{{$peminjaman->konfirmasi}}</td>
 
                         <td>
-                            <a href="{{url('admin/peminjaman/edit/'.$buku->id)}}" class="btn btn-sm btn-warning"><i
+                            <a href="{{url('admin/peminjaman/edit/'.$peminjaman->id)}}" class="btn btn-sm btn-warning"><i
                                     class="fas fa-edit"></i></a>
                             <button type="button" class="btn btn-sm btn-danger" data-toggle="modal"
                                 data-target="#exampleModal{{$peminjaman->id}}">
@@ -77,7 +82,7 @@
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-success"
                                                                     data-dismiss="modal">Close</button>
-                                                                <a href="{{url('admin/peminjaman/delete/'.$k->id)}}"
+                                                                <a href="{{url('admin/peminjaman/delete/'.$peminjaman->id)}}"
                                                                     class="btn btn-danger" data-confirm-delete="true">Hapus</a>
                                                             </div>
                                                         </div>

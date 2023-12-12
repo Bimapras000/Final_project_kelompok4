@@ -43,15 +43,20 @@
         <h1 class="logo me-auto"><a href="index.html">Ngepinter.com</a></h1>
 
         <nav id="navbar" class="navbar order-last order-lg-0">
-            <ul>
+            <ul class="mb-8">
                 <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
                 <li><a class="nav-link scrollto" href="#about">About</a></li>
                 <li><a class="nav-link scrollto" href="#services">Services</a></li>
                 <li><a class="nav-link scrollto " href="#portfolio">Book</a></li>
-                <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+                
+            </ul>
+            <ul >
+              <li><a class="login mt-6" href="{{ route('login') }}">Login</a></li>
+              <li><a class="nav-link scrollto" href="{{ route('register') }}">Register</a></li>
             </ul>
             <i class="bi bi-list mobile-nav-toggle"></i>
         </nav><!-- .navbar -->
+        
     </div>
 </header><!-- End Header -->
 

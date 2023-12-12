@@ -181,6 +181,15 @@ h6 {
   position: relative;
 }
 
+.login {
+
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
 .navbar a,
 .navbar a:focus {
   display: flex;

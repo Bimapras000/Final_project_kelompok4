@@ -7,9 +7,12 @@ use App\Http\Controllers\AnggotaController;
 use App\Http\Controllers\PetugasController;
 use App\Http\Controllers\BukuController;
 use App\Http\Controllers\PengembalianController;
+use App\Http\Controllers\PeminjamanController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\DetailsController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PenerbitController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,10 +31,25 @@ Route::get('/details/{id}',[DetailsController::class, 'details'])->name('details
 Route::get('/',[LandingController::class, 'index']);
 Route::get('details/{id}',[DetailsController::class, 'details'])->name('details');
 
-Route::resource('/tampiluser', UserController::class);
+// Route::group(['middleware' => ['auth', 'role:user']], function(){
+Route::middleware(['role:anggota'])->group(function () {
+    // Route::resource('user', UserController::class);
+    Route::get('/user',[UserController::class, 'index']);
+    Route::get('/user/pinjamBuku',[UserController::class, 'pinjam']);
+    Route::get('/user/create/{id}',[UserController::class, 'create']);
+    Route::post('/user/store',[UserController::class, 'store']);
+});
 
 // Route::get('/user',[DashboardController::class, 'index']);
 
+// Custum Authenticate 
+Route::get('/login', [AuthController::class, 'showlogin'])->name('login');
+Route::post('/login', [AuthController::class, 'login'])->name('login');
+Route::get('/register', [AuthController::class, 'showregister'])->name('register');
+Route::post('/register', [AuthController::class, 'register'])->name('register');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+Route::group(['middleware' => ['auth', 'role:admin-petugas']], function(){
 Route::prefix('admin')->group(function(){
 
 Route::get('/dashboard',[DashboardController::class, 'index']);
@@ -81,10 +99,19 @@ Route::post('/kategori/update/{id}',[KategoriController::class, 'update']);
 Route::get('/kategori/delete/{id}',[KategoriController::class, 'destroy']);
 Route::get('/kategori/kategoriPDF',[KategoriController::class, 'kategoriPDF']);
 
-//Route Peminjaman
-// Route::get('/peminjaman',[PeminjamanController::class, 'index']);
+//Route Penerbit
+Route::get('/penerbit',[PenerbitController::class, 'index']);
+Route::get('/penerbit/create',[PenerbitController::class, 'create']);
+Route::post('/penerbit/store',[PenerbitController::class, 'store']);
+Route::get('/penerbit/edit/{id}',[PenerbitController::class, 'edit']);
+Route::post('/penerbit/update/{id}',[PenerbitController::class, 'update']);
+Route::get('/penerbit/delete/{id}',[PenerbitController::class, 'destroy']);
+
+// Route Peminjaman
+Route::get('/peminjaman',[PeminjamanController::class, 'index']);
 
 });
-Auth::routes();
+});
+// Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

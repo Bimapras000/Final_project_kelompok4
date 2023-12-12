@@ -12,7 +12,7 @@ class Peminjaman extends Model
     protected $table = 'peminjaman';
     //mapping kolom atau field
     protected $fillable = [
-        'kode','tgl_peminjaman','tgl_pengembalian','status','anggota_id','buku_id','petugas_id'
+        'kode','tgl_peminjaman','tgl_pengembalian','status','users_id','buku_id','konfirmasi'
     ];
     public $timestamps = false;
     //relasi antara table
@@ -20,4 +20,10 @@ class Peminjaman extends Model
     // public function kategori(){
     //     return $this->belongsTo(Kategori::class);
     // }
+    public function users(){
+        return $this->belongsTo(User::class);
+    }
+    public function buku(){
+        return $this->belongsTo(Buku::class);
+    }
 }

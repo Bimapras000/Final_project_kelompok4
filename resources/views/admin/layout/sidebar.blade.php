@@ -72,8 +72,9 @@
                         <h6 class="collapse-header">Custom Data:</h6>
                         
                         <a class="collapse-item" href="{{ url('/admin/anggota') }}">Anggota</a>
+                        @if (Auth::user()->role == 'admin')
                         <a class="collapse-item" href="{{ url('/admin/petugas') }}">Petugas</a>
-                        
+                        @endif
                     </div>
                 </div>
             </li>
@@ -91,6 +92,7 @@
                         <h6 class="collapse-header">Custom Buku:</h6>
                         <a class="collapse-item" href="{{ url('/admin/buku') }}">Buku</a>
                         <a class="collapse-item" href="{{ url('/admin/kategori') }}">Kategori</a>
+                        <a class="collapse-item" href="{{ url('/admin/penerbit') }}">Penerbit</a>
              
 
                     </div>

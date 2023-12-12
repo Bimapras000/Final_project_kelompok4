@@ -17,7 +17,13 @@ class Buku extends Model
     public $timestamps = false;
     //relasi antara table
 
-    // public function kategori(){
-    //     return $this->belongsTo(Kategori::class);
-    // }
+    public function kategori(){
+        return $this->belongsTo(Kategori::class);
+    }
+    public function penerbit(){
+        return $this->belongsTo(Penerbit::class);
+    }
+    public function peminjaman(){
+        return $this->hasMany(Peminjaman::class);
+    }
 }
