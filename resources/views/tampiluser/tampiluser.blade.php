@@ -87,7 +87,7 @@
                         
                             </div>
                             <div class="modal-footer">
-                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                              <a  class="btn btn-secondary" data-bs-dismiss="modal">Close</a>
                               <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#openSecondModal">Save changes</button> -->
                               <a href="{{url('user/create/'.$bukus->id)}}" class="btn btn-primary">Pinjam Buku</a>
                             </div>
@@ -98,7 +98,7 @@
                       <!-- End Modal -->
                       <!-- Button trigger modal -->
 
-                      <div class="cart-concern">
+                      <!-- <div class="cart-concern">
                         <div class="cart-button d-flex justify-content-between align-items-center">
                           <button type="button" class="btn-wrap cart-link d-flex align-items-center">add to cart <i class="icon icon-arrow-io"></i>
                           </button>
@@ -108,7 +108,7 @@
                             <span class="tooltip-text">Quick view</span>
                           </button>
                         </div>
-                      </div>
+                      </div> -->
                       <div class="product-detail">
                         <h3 class="product-title">
                           {{$bukus->judulbuku}}

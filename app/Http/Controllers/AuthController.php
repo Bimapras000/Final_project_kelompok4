@@ -20,7 +20,7 @@ class AuthController extends Controller
         $user = User::where('email', $credentials['email'])->first();
 
         if (!$user) {
-            return redirect('/login')
+            return redirect('/log_in')
                 ->with('error', 'Akun tidak ditemukan. Silakan coba lagi.');
         }
 
@@ -39,7 +39,7 @@ class AuthController extends Controller
             }
         // }
 
-        return redirect('/login')
+        return redirect('/log_in')
             ->with('error', 'Kredensial tidak valid. Silakan coba lagi.');
     }
 
@@ -53,17 +53,23 @@ class AuthController extends Controller
     {
         $this->validate($request, [
             'name' => 'required|string|max:255',
+            'alamat' => ['required', 'max:100'],
+            'no_tlp' => ['required', 'max:13'],
+            'tgl_bergabung' => ['required'],
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ]);
 
         $user = User::create([
             'name' => $request->name,
+            'alamat' => $request->alamat,
+            'no_tlp' => $request->no_tlp,
+            'tgl_bergabung' => $request->tgl_bergabung,
             'email' => $request->email,
             'password' => bcrypt($request->password),
         ]);
 
-        return redirect()->route('login')
+        return redirect()->route('log_in')
             ->with('success', 'Register berhasil dihapus.');
     }
 

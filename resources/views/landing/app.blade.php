@@ -51,8 +51,8 @@
                 
             </ul>
             <ul >
-              <li><a class="login mt-6" href="{{ route('login') }}">Login</a></li>
-              <li><a class="nav-link scrollto" href="{{ route('register') }}">Register</a></li>
+              <li><a class="login mt-6" href="{{ route('log_in') }}">Login</a></li>
+              <li><a class="nav-link scrollto" href="{{ route('regis') }}">Register</a></li>
             </ul>
             <i class="bi bi-list mobile-nav-toggle"></i>
         </nav><!-- .navbar -->

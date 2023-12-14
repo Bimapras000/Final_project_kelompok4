@@ -43,9 +43,9 @@ Route::middleware(['role:anggota'])->group(function () {
 // Route::get('/user',[DashboardController::class, 'index']);
 
 // Custum Authenticate 
-Route::get('/login', [AuthController::class, 'showlogin'])->name('login');
+Route::get('/login', [AuthController::class, 'showlogin'])->name('log_in');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
-Route::get('/register', [AuthController::class, 'showregister'])->name('register');
+Route::get('/register', [AuthController::class, 'showregister'])->name('regis');
 Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
@@ -109,6 +109,12 @@ Route::get('/penerbit/delete/{id}',[PenerbitController::class, 'destroy']);
 
 // Route Peminjaman
 Route::get('/peminjaman',[PeminjamanController::class, 'index']);
+Route::get('/peminjaman/create',[PeminjamanController::class, 'create']);
+Route::post('/peminjaman/store',[PeminjamanController::class, 'store']);
+Route::get('/peminjaman/edit/{id}',[PeminjamanController::class, 'edit']);
+Route::post('/peminjaman/update/{id}',[PeminjamanController::class, 'update']);
+Route::get('/peminjaman/delete/{id}',[PeminjamanController::class, 'destroy']);
+
 
 });
 });
