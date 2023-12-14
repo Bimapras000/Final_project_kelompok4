@@ -40,6 +40,10 @@ Route::middleware(['role:anggota'])->group(function () {
     Route::post('/user/store',[UserController::class, 'store']);
 });
 
+//route sementara api
+Route::get('/bukuapi', [BukuController::class, 'apiBuku']);
+Route::get('/bukuapi/{id}', [BukuController::class, 'apiBukuDetail']);
+
 // Route::get('/user',[DashboardController::class, 'index']);
 
 // Custum Authenticate 

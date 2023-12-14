@@ -229,4 +229,29 @@ class BukuController extends Controller
         
         return redirect('admin/buku')->with('success', 'Buku Berhasil Diimport!');
     }
+    public function apiBuku(){
+        $buku = Buku::all();
+        return response()->json([
+            'success'=>true,
+            'message' => 'Data Buku',
+            'data'=>$buku
+        ],200
+    );
+    }
+    public function apiBukuDetail($id){
+        $buku = Buku::find($id);
+        if($buku){
+            return response()->json([
+                'success' => true,
+                'message'=> 'Detail Buku',
+                'data'=>$buku
+            ], 200);
+        }
+        else {
+            return response()->json([
+                'success'=>false,
+                'message'=>'Detail Buku Tidak Ditemukan'
+            ], 404);
+        }
+    }
 }
