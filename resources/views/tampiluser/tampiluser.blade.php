@@ -22,19 +22,25 @@
       <div class="container">
         <div class="row">
 
-          <section id="selling-products" class="col-md-9 product-store">
+          <section id="selling-products" class="col-md-12 product-store">
             <div class="container">
+              <form class="d-flex" role="search" action="{{ url('user') }}" method="get">
+              <input class="search-field" placeholder="Search" type="text" name="judul" id="judul">
+              <!-- <div class="input-group-append"> -->
+                  <button class="btn btn-dark" type="submit">Search <i class="icon icon-search"></i></button>
+              <!-- </div> -->
+              </form>
               <div class="tab-content">
                 <div id="all" data-tab-content class="active">
                   <div class="row d-flex flex-wrap">
                     @foreach ($buku as $bukus)
-                    <div class="product-item col-lg-4 col-md-6 col-sm-6">
+                    <div class="product-item col-lg-3 col-md-6 col-sm-6">
                       <div class="image-holder"  data-bs-toggle="modal" data-bs-target="#staticBackdrop{{$bukus->id}}">
                       <!-- <div class="image-holder" data-toggle="modal" data-target="#exampleModal"> -->
                       @empty($bukus->foto)
-                        <img src="{{url('admin/img/nophoto.jpg')}}" alt="Books" class="product-image" style="width: 500px; height: 400px;">
+                        <img src="{{url('admin/img/nophoto.jpg')}}" alt="Books" class="product-image" style="width: 300px; height: 400px;">
                       @else
-                        <img src="{{url('admin/img')}}/{{$bukus->foto}}" alt="Books" class="product-image" style="width: 500px; height: 400px;">
+                        <img src="{{url('admin/img')}}/{{$bukus->foto}}" alt="Books" class="product-image" style="width: 300px; height: 400px;">
                       @endempty
                       </div>
                       
@@ -141,7 +147,7 @@
           </section>
          
 
-          <aside class="col-md-3">
+          <!-- <aside class="col-md-3">
             <div class="sidebar">
               <div class="widgets widget-menu">
                 <div class="widget-search-bar">
@@ -165,7 +171,7 @@
               </div>
               
             </div>
-          </aside>
+          </aside> -->
           
         </div>        
       </div>      

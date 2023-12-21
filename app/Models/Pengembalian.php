@@ -10,14 +10,20 @@ class Pengembalian extends Model
     use HasFactory;
 
         
-        protected $table = 'Pengembalian';
+        protected $table = 'pengembalian';
         
         protected $fillable = [
-            'tgl_pengembalian','denda','peminjaman_id','petugas_id'
+            'kode','tgl_peminjaman','tgl_pengembalian','status','users_id','buku_id','denda','buku_kembali'
         ];
-        
+        public $timestamps = false;
     
         public function peminjaman(){
-            return $this->hasMany(Peminjaman::class);
+            return $this->belongsTo(Peminjaman::class);
+        }
+        public function users(){
+            return $this->belongsTo(User::class);
+        }
+        public function buku(){
+            return $this->belongsTo(Buku::class);
         }
 }

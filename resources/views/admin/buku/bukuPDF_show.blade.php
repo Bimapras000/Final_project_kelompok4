@@ -86,7 +86,7 @@
     @endforeach
     <footer>
         <p>
-            <b>Copyright&copy; 2022</b> Created with HTML <a href="https://www.anaktekno.com">Anaktekno.com</a>
+            <b>Copyright&copy; 2022</b> Created with <b>Ngepinter.Com</b>
         </p>
     </footer>
 </body>

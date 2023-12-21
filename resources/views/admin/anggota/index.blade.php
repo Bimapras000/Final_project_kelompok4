@@ -1,15 +1,13 @@
 @extends('admin.layout.appadmin')
 @section('content')
 
-<h1 class="h3 mb-2 text-gray-800">Tables</h1>
-                    <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
-                        For more information about DataTables, please visit the <a target="_blank"
-                            href="https://datatables.net">official DataTables documentation</a>.</p>
+<h1 class="h3 mb-2 text-gray-800">Tabel Anggota</h1><br>
+                    
 
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#tambahDataModal">Tambah Data</a>
+                            <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#tambahDataModal"><i class="fas fa-plus"></i></a>
                             <a href="{{url('admin/anggota/anggotaPDF')}}" class="btn btn-danger"><i class="fas fa-file-pdf"></i></a>
                         </div>
                         <div class="card-body">
@@ -24,6 +22,7 @@
                                             <th>Nomor Telepon</th>
                                             <th>Tanggal Bergabung</th>
                                             <th>Email</th>
+                                            <th>Role</th>
                                             <th>Action</th>
 
 
@@ -38,32 +37,36 @@
                                             <th>Nomor Telepon</th>
                                             <th>Tanggal Bergabung</th>
                                             <th>Email</th>
+                                            <th>Role</th>
                                             <th>Action</th>
 
                                         </tr>
                                     </tfoot>
                                     <tbody>
                                     @php $no = 1 @endphp
-                                    @foreach ($anggota as $a)
+                                    @foreach ($user as $user)
+                                    @if($user->role === 'anggota')
                                     
                                         <tr>
                                             <td>{{$no++}}</td>
-                                            <td>{{$a->nama}}</td>
-                                            <td>{{$a->alamat}}</td>
-                                            <td>{{$a->no_tlp}}</td>
-                                            <td>{{$a->tgl_bergabung}}</td>
-                                            <td>{{$a->email}}</td>
+                                            <td>{{$user->name}}</td>
+                                            <td>{{$user->alamat}}</td>
+                                            <td>{{$user->no_tlp}}</td>
+                                            <td>{{$user->tgl_bergabung}}</td>
+                                            <td>{{$user->email}}</td>
+                                            <td>{{$user->role}}</td>
+                                            
                                             <td>
                                                 
-                                            <a href="{{url('admin/anggota/edit/'.$a->id)}}" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></a>
+                                            <a href="{{url('admin/anggota/edit/'.$user->id)}}" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></a>
                                             
                                             <!-- Button trigger modal -->
-                                            <button type="button"  class="btn btn-sm btn-danger" data-toggle="modal" data-target="#exampleModal{{$a->id}}">
+                                            <button type="button"  class="btn btn-sm btn-danger" data-toggle="modal" data-target="#exampleModal{{$user->id}}">
                                             <i class="fas fa-trash"></i>
                                             </button>
 
                                             <!-- Modal -->
-                                            <div class="modal fade" id="exampleModal{{$a->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal fade" id="exampleModal{{$user->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
                                                 <div class="modal-header">
@@ -73,11 +76,11 @@
                                                     </button>
                                                 </div>
                                                 <div class="modal-body">
-                                                Apakah anda yakin ingin menghapus data {{$a->nama}} ?
+                                                Apakah anda yakin ingin menghapus data {{$user->name}} ?
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                    <a href="{{url('admin/anggota/delete/'.$a->id)}}" type="button" class="btn btn-danger">Delete</a>
+                                                    <a href="{{url('admin/anggota/delete/'.$user->id)}}" type="button" class="btn btn-danger">Delete</a>
                                                 </div>
                                                 </div>
                                             </div>
@@ -85,7 +88,7 @@
                                             </td>
                                             
                                         </tr>
-                                        
+                                        @endif
                                         @endforeach
                                         
                                     </tbody>
@@ -96,20 +99,20 @@
 
                     
                     <div class="modal fade" id="tambahDataModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
+                        <div class="modal-dialog modal-lg">
                             <div class="modal-content">
                             <form action="{{url('admin/anggota/store')}}" method="POST">
                             @csrf
                             <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="exampleModalLabel">New message</h1>
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Tambah Anggota</h1>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
                                 
                                 <div class="mb-3">
                                     <label for="recipient-name" class="col-form-label">Nama :</label>
-                                    <input type="text" name="nama" class="form-control @error('nama') is-invalid @enderror" id="recipient-name" >
-                                    @error('nama')
+                                    <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" id="recipient-name" >
+                                    @error('name')
                                         <div class="invalid-feedback">
                                             {{$message}}
                                         </div>
@@ -152,15 +155,6 @@
                                     @enderror
                                 </div>
                                 <div class="mb-3">
-                                    <label for="recipient-name" class="col-form-label">Username :</label>
-                                    <input type="text" name="username" class="form-control @error('username') is-invalid @enderror" id="recipient-name" >
-                                    @error('username')
-                                        <div class="invalid-feedback">
-                                            {{$message}}
-                                        </div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3">
                                     <label for="recipient-name" class="col-form-label">Password :</label>
                                     <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" id="recipient-name" >
                                     @error('password')
@@ -173,7 +167,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="submit" name="submit" class="btn btn-primary">Sumbit</button>
+                                <button type="submit" name="submit" class="btn btn-primary">Simpan</button>
                             </div>
                             </form>
                             </div>

@@ -13,62 +13,69 @@
     </ul>
 </div>
 @endif
-@foreach($petugas as $p)
+@foreach ($user as $user)
 <div class="card shadow mb-4">
     <div class="card-body">
-<form method="POST" action="{{url('admin/petugas/update/'.$p->id)}}" enctype="multipart/form-data">
-    @csrf
+<form method="POST" action="{{url('admin/petugas/update/'.$user->id)}}" enctype="multipart/form-data">
+  @csrf
   <div class="form-group row">
     <label for="text" class="col-4 col-form-label">Nama</label> 
     <div class="col-8">
-      <input id="text" name="nama" type="text" value="{{$p->nama}}" class="form-control @error('nama') is-invalid @enderror" >
-      @error('nama')
-            <div class="invalid-feedback">
-                {{$message}}
-            </div>
-            @enderror
+      <input id="text" name="name" type="text" class="form-control" value="{{$user->name}}">
     </div>
   </div>
   <div class="form-group row">
-    <label for="text1" class="col-4 col-form-label">Email</label> 
+    <label for="text1" class="col-4 col-form-label">Alamat</label> 
     <div class="col-8">
-      <input id="text1" name="email" type="text" value="{{$p->email}}" class="form-control @error('email') is-invalid @enderror">
-      @error('email')
-            <div class="invalid-feedback">
-                {{$message}}
-            </div>
-            @enderror
+      <input id="text1" name="alamat" type="text" class="form-control" value="{{$user->alamat}}">
+    </div>
+  </div>
+  
+  <div class="form-group row">
+    <label for="text2" class="col-4 col-form-label">Nomor Telepon</label> 
+    <div class="col-8">
+      <input id="text2" name="no_tlp" type="text" class="form-control" value="{{$user->no_tlp}}">
     </div>
   </div>
   <div class="form-group row">
-    <label for="text2" class="col-4 col-form-label">Username</label> 
+    <label for="text3" class="col-4 col-form-label">Tanggal Bergabung</label> 
     <div class="col-8">
-      <input id="text2" name="username" type="text" value="{{$p->username}}" class="form-control @error('username') is-invalid @enderror">
-      @error('username')
-            <div class="invalid-feedback">
-                {{$message}}
-            </div>
-            @enderror
+      <input id="text3" name="tgl_bergabung" type="date" class="form-control" value="{{$user->tgl_bergabung}}">
     </div>
   </div>
   <div class="form-group row">
-    <label for="text3" class="col-4 col-form-label">Password</label> 
+    <label for="text4" class="col-4 col-form-label">Email</label> 
     <div class="col-8">
-      <input id="text3" name="password" type="text" value="{{$p->password}}" class="form-control @error('password') is-invalid @enderror">
-      @error('password')
-            <div class="invalid-feedback">
-                {{$message}}
-            </div>
-            @enderror
+      <input id="text4" name="email" type="email" class="form-control" value="{{$user->email}}">
     </div>
   </div>
+  <div class="form-group row">
+    <label for="text4" class="col-4 col-form-label">Password</label> 
+    <div class="col-8">
+      <input id="text4" name="password" type="text" class="form-control" value="{{$user->password}}">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="select" class="col-4 col-form-label">Role</label> 
+    <div class="col-8">
+      <select id="select" name="role" class="custom-select">
+      @foreach($roles as $role)
+        <option value="{{$role}}" @if($user->role === $role) selected @endif>{{$role}}</option>
+      @endforeach
+      </select>
+    </div>
+  </div>
+  
   <div class="form-group row">
     <div class="offset-4 col-8">
-      <button name="submit" type="submit" class="btn btn-primary">Submit</button>
+        <a href="{{url('admin/anggota')}}" class="btn btn-secondary">close</a>
+      <button name="submit" type="submit" class="btn btn-warning" style="color:white">Edit</button>
     </div>
   </div>
 </form>
 </div>
 </div>
+
 @endforeach
+
 @endsection

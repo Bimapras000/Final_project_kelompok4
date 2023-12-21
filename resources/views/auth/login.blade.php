@@ -1,8 +1,10 @@
+
 @extends('layouts.app1')
 
-@section('login')
+@section('konten')
 
 <div class="limiter">
+	
 		<div class="container-login100">
 			<div class="wrap-login100">
                         
@@ -15,7 +17,11 @@
                     <span class="login100-form-title">
 						Please Login Here
 					</span>
-
+					@if (session('error'))
+						<div class="alert alert-danger">
+							{{ session('error') }}
+						</div>
+					@endif
 					<div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
 						
 						<input class="input100 @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" type="email" placeholder="Email" autofocus>
@@ -50,7 +56,7 @@
 					</div>
 
 					<div class="text-center p-t-136">
-						<a class="txt2" href="{{ route('regis') }}">
+						<a class="txt2" href="{{ route('register') }}">
 							Create your Account
 							<i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
 						</a><br>

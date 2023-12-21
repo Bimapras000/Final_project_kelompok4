@@ -1,17 +1,16 @@
 @extends('admin.layout.appadmin')
 @section('content')
 
-<h1 class="h3 mb-2 text-gray-800">Tables</h1>
-                    <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
-                        For more information about DataTables, please visit the <a target="_blank"
-                            href="https://datatables.net">official DataTables documentation</a>.</p>
-
+<h1 class="h3 mb-2 text-gray-800">Tabel Peminjaman</h1>
+                    <br>
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
                             <!-- <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="fas fa-plus"></i></a> -->
                              <!-- class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="fas fa-plus"></i></a> -->
-                             <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#Modalcreate">Tambah Data</a>
+                             <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#Modalcreate"><i class="fas fa-plus"></i></a>
+                             <a href="{{url('admin/peminjaman/peminjamanPDF')}}" class="btn btn-danger"><i class="fas fa-file-pdf"></i></a>
+                            <a href="{{url('admin/peminjaman/export')}}" class="btn btn-success"><i class="fas fa-file-excel"></i></a>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -20,12 +19,13 @@
                     <tr>
                         <th>NO</th>
                         <th>Kode Peminjaman</th>
-                        <<th>Nama Peminjam</th>
+                        <th>Nama Peminjam</th>
                         <th>Judul Buku</th>
                         <th>Tanggal Peminjaman</th>
                         <th>Tanggal Pengembalian</th>
                         <th>Status</th>
                         <th>Konfirmasi</th>
+                        <th>Denda</th>
                         <th>Action</th>
 
                     </tr>
@@ -40,6 +40,7 @@
                         <th>Tanggal Pengembalian</th>
                         <th>Status</th>
                         <th>Konfirmasi</th>
+                        <th>Denda</th>
                         <th>Action</th>
 
                     </tr>
@@ -57,6 +58,7 @@
                         <td>{{$peminjaman->tgl_pengembalian}}</td>
                         <td>{{$peminjaman->status}}</td>
                         <td>{{$peminjaman->konfirmasi}}</td>
+                        <td>{{$peminjaman->denda }}</td>
 
                         <td>
                             <a href="{{url('admin/peminjaman/edit/'.$peminjaman->id)}}" class="btn btn-sm btn-warning"><i
@@ -129,7 +131,7 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="recipient-name" class="col-form-label">Tanggal Peminjaman :</label>
-                                    <input type="date" name="tgl_peminjaman" class="form-control @error('tgl_peminjaman') is-invalid @enderror" id="recipient-name" value="{{ date('Y-m-d') }}" readonly>
+                                    <input type="date" name="tgl_peminjaman" class="form-control @error('tgl_peminjaman') is-invalid @enderror" id="recipient-name" value="{{ date('Y-m-d') }}" >
                                     @error('tgl_peminjaman')
                                         <div class="invalid-feedback">
                                             {{$message}}
@@ -193,8 +195,7 @@
                 </tbody>
             </table>
         </div>
-    </div>
-</div>
+
 
 </div>
 <!-- /.container-fluid -->

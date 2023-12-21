@@ -30,7 +30,9 @@
                                         {{$message}}
                                     </div>
                                 @enderror
+                                <span >* Kode diisi dengan format P00(angka)</span>
                             </div>
+                            
                         </div>
                             
                             <!-- <label for="judulbuku" class="col-sm-4 col-form-label">Judul Buku</label> 
@@ -81,9 +83,8 @@
                         
                         <div class="form-group row">
                             <div class="offset-sm-4 col-sm-8">
-                                <!-- <button name="submit" type="submit" class="btn btn-primary">Submit</button> -->
-                                <a name="submit" type="submit" class="btn btn-primary" stlyle="color:white;">Submit</a>
-                                <a href="{{ url('user') }}" class="btn btn-sm btn-secondary">Cancel</a>
+                                <button name="submit" type="submit" class="btn btn-primary btn-lg">Submit</button>
+                                <button type="button" class="btn btn-secondary btn-lg" onclick="window.location.href='{{ url('user') }}'">Cancel</button>
                             </div>
                         </div>
                     </form>

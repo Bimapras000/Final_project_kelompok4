@@ -25,8 +25,9 @@ class KategoriController extends Controller
     public function create()
     {
         //
-        $kategori = DB::table('kategori')->get();
-        return view ('admin.kategori.create', compact('kategori'));
+        // $kategori = DB::table('kategori')->get();
+        // return view ('admin.kategori.create', compact('kategori'));
+        return view ('admin.kategori.index');
     }
 
     /**

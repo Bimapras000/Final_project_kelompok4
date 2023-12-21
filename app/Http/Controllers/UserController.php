@@ -7,7 +7,10 @@ use App\Models\Buku;
 use App\Models\Kategori;
 use App\Models\Penerbit;
 use App\Models\Peminjaman;
+use App\Models\Pengembalian;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+use Auth;
 use DB;
 
 
@@ -29,9 +32,9 @@ class UserController extends Controller
             // ->select('buku.*','penerbit.nama as penerbit','kategori.nama as kategori')
             // ->where('buku.id', $id)
             // ->get();
-            $buku = Buku::where('judulbuku', 'like', '%'.$judul.'%')->paginate(6);
+            $buku = Buku::where('judulbuku', 'like', '%'.$judul.'%')->paginate(4);
         } else {
-            $buku = Buku::paginate(6);
+            $buku = Buku::paginate(4);
         }
     
         return view('tampiluser/tampiluser', compact('buku','kategori','penerbit'));
@@ -75,7 +78,7 @@ class UserController extends Controller
         //     'status' => 'pinjam',
         //     'konfirmasi' => null, 
         // ]);
-
+        $defaultDenda = 0;
         $peminjaman = new Peminjaman();
         $peminjaman->kode = $request->kode;
         $peminjaman->buku_id = $request->buku_id;
@@ -84,6 +87,7 @@ class UserController extends Controller
         $peminjaman->users_id = $request->user()->id; // Mendapatkan ID pengguna yang login
         $peminjaman->status = 'pinjam';
         $peminjaman->konfirmasi = null; // Nilai konfirmasi default adalah null saat peminjaman dibuat
+        $peminjaman->denda = $defaultDenda; 
         $peminjaman->save();
         
         return redirect('user')->with('success', 'Berhasil Mengedit Kategori');;
@@ -95,12 +99,20 @@ class UserController extends Controller
 
         $buku = DB::table('buku')->get();
         $users = DB::table('users')->get();
+        // Daftar peminjaman yang sedang berlangsung untuk pengguna yang login
         $peminjaman = Peminjaman::where('users_id', $users_id)
+        ->where('status', 'pinjam') // Filter hanya peminjaman yang sedang berlangsung
         ->join('buku', 'buku_id', '=', 'buku.id')
         ->join('users', 'users_id', '=', 'users.id')
-        ->select('peminjaman.*', 'buku.judulbuku as judul_buku','users.name as users')
+        ->select('peminjaman.*', 'buku.judulbuku as judul_buku', 'users.name as users')
         ->get();
 
+        // Daftar pengembalian yang telah dilakukan oleh pengguna yang login
+        $pengembalian = Pengembalian::where('users_id', $users_id)
+        ->join('buku', 'buku_id', '=', 'buku.id')
+        ->join('users', 'users_id', '=', 'users.id')
+        ->select('pengembalian.*', 'buku.judulbuku as judul_buku', 'users.name as users')
+        ->get();
         // $buku = DB::table('buku')->get();
         // $user = DB::table('users')->get();
         // $peminjaman = Peminjaman::join('users', 'user_id', '=', 'users.id')
@@ -109,8 +121,43 @@ class UserController extends Controller
         //     ->get();
         // return view ('admin.peminjaman.index', compact('peminjaman','buku','user'));
 
-        return view('tampiluser/pinjaman', compact('peminjaman','buku','users'));
+        return view('tampiluser/pinjaman', compact('peminjaman','buku','users','pengembalian'));
     }
+
+    public function showpass(){
+        
+        $user = User::findOrFail(Auth::id());
+        return view('tampiluser/resetpass', compact('user'));
+    }
+
+    public function updatepass(Request $request)
+    {
+        $request->validate([
+            'old_password' => 'nullable|string',
+            'password' => 'nullable|required_with:old_password|string|confirmed|min:6'
+        ]);
+
+        $user = Auth::user();
+
+        if ($request->filled('old_password')) {
+            if (Hash::check($request->old_password, $user->password)) {
+                $user->password = Hash::make($request->password);
+                $user->save(); // Simpan perubahan password ke dalam database
+            } else {
+                return back()
+                    ->withErrors(['old_password' => __('Tolong Periksa Password')])
+                    ->withInput();
+            }
+        }
+        return redirect('user')->with('success', 'Berhasil Mengubah Password!');
+
+    }
+    // public function showBooksByCategory($id)
+    // {
+    //     $bukuByCategory = Buku::where('kategori_id', $id)->paginate(3);
+
+    //     return view('tampiluser/tampiluser', ['bukuByCategory' => $bukuByCategory]);
+    // }
 }
 
 

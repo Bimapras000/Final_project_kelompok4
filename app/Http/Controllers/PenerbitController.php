@@ -22,8 +22,9 @@ class PenerbitController extends Controller
     public function create()
     {
         //
-        $penerbit = DB::table('penerbit')->get();
-        return view ('admin.penerbit.create', compact('penerbit'));
+        // $penerbit = DB::table('penerbit')->get();
+        // return view ('admin.penerbit.create', compact('penerbit'));
+        return view ('admin.penerbit.index');
     }
 
     /**

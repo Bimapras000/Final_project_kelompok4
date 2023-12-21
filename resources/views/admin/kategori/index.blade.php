@@ -1,15 +1,13 @@
 @extends('admin.layout.appadmin')
 @section('content')
 
-<h1 class="h3 mb-2 text-gray-800">Tables</h1>
-                    <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
-                        For more information about DataTables, please visit the <a target="_blank"
-                            href="https://datatables.net">official DataTables documentation</a>.</p>
-
+<h1 class="h3 mb-2 text-gray-800">Tabel Kategori</h1>
+                    <br>
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <a href="{{url('admin/kategori/create')}}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+                            <!-- <a href="{{url('admin/kategori/create')}}" class="btn btn-primary"><i class="fas fa-plus"></i></a> -->
+                            <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop"><i class="fas fa-plus"></i></a>
                             <a href="{{url('admin/kategori/kategoriPDF')}}" class="btn btn-danger"><i class="fas fa-file-pdf"></i></a>
                         </div>
                         <div class="card-body">
@@ -75,6 +73,40 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                </div>
+
+                                                                    
+                                                <!-- Modal Create-->
+                                                <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                                <div class="modal-dialog modal-lg">
+                                                    <div class="modal-content">
+                                                    <form method="POST" action="{{url('admin/kategori/store')}}" enctype="multipart/form-data">
+                                                    @csrf
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="staticBackdropLabel">Tambah Kategori</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                        <div class="form-group row">
+                                                            <label for="text" class="col-4 col-form-label">Nama Kategori</label> 
+                                                            <div class="col-8">
+                                                            <input id="text" name="nama" type="text" class="form-control @error('nama') is-invalid @enderror" >
+                                                            @error('nama')
+                                                                    <div class="invalid-feedback">
+                                                                        {{$message}}
+                                                                    </div>
+                                                                    @enderror
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                            <button type="submit" name="submit" class="btn btn-primary">Simpan</button>
+                                                        </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
                                                 </div>
                                             </td>
                                             

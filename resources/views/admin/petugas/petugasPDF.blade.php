@@ -30,20 +30,27 @@
             <tr>
                 <th>No</th>
                 <th>Nama</th>
+                <th>Alamat</th>
+                <th>Nomor Telepon</th>
+                <th>Tanggal Bergabung</th>
                 <th>Email</th>
-                <th>Username</th>
+                <th>Role</th>
             </tr>
         </thead>
         <tbody>
             @php $no = 1 @endphp
-            @foreach ($petugas as $p)
-                                    
-            <tr>
-                <td>{{$no++}}</td>
-                <td>{{$p->nama}}</td>
-                <td>{{$p->email}}</td>
-                <td>{{$p->username}}</td>
-            </tr>
+                @foreach ($petugas as $petugas)
+                @if($petugas->role === 'petugas' || $petugas->role === 'admin')
+                <tr>
+                    <td>{{$no++}}</td>
+                    <td>{{$petugas->name}}</td>
+                    <td>{{$petugas->alamat}}</td>
+                    <td>{{$petugas->no_tlp}}</td>
+                    <td>{{$petugas->tgl_bergabung}}</td>
+                    <td>{{$petugas->email}}</td>
+                    <td>{{$petugas->role}}</td>
+                </tr>
+                @endif
             @endforeach
         </tbody>
     </table>

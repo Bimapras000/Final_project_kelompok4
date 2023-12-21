@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 
 class AuthController extends Controller
@@ -20,7 +21,7 @@ class AuthController extends Controller
         $user = User::where('email', $credentials['email'])->first();
 
         if (!$user) {
-            return redirect('/log_in')
+            return redirect('/login')
                 ->with('error', 'Akun tidak ditemukan. Silakan coba lagi.');
         }
 
@@ -39,41 +40,63 @@ class AuthController extends Controller
             }
         // }
 
-        return redirect('/log_in')
-            ->with('error', 'Kredensial tidak valid. Silakan coba lagi.');
+        return redirect('/login')
+            ->with('error', 'Email atau password salah. Silakan coba lagi.');
     }
 
+//     public function login(Request $request)
+// {
+//     $credentials = $request->only('email', 'password');
 
-    public function showregister()
-    {
-        return view('auth.register');
-    }
+//     if (Auth::attempt($credentials)) {
+//         $user = Auth::user();
 
-    public function register(Request $request)
-    {
-        $this->validate($request, [
-            'name' => 'required|string|max:255',
-            'alamat' => ['required', 'max:100'],
-            'no_tlp' => ['required', 'max:13'],
-            'tgl_bergabung' => ['required'],
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
-        ]);
+//         if ($user->role == 'admin' || $user->role == 'petugas') {
+//             return redirect('/admin/dashboard');
+//         } elseif ($user->role == 'anggota') {
+//             return redirect('/user');
+//         }
+//     } else {
+//         return redirect('/login')
+//             ->with('error', 'Email atau password salah. Silakan coba lagi.');
+//     }
 
-        $user = User::create([
-            'name' => $request->name,
-            'alamat' => $request->alamat,
-            'no_tlp' => $request->no_tlp,
-            'tgl_bergabung' => $request->tgl_bergabung,
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
-        ]);
+//     return redirect('/login')
+//         ->with('error', 'Email atau password salah. Silakan coba lagi.');
+// }
 
-        return redirect()->route('log_in')
-            ->with('success', 'Register berhasil dihapus.');
-    }
 
-    public function logout(Request $request)
+public function showRegister()
+{
+    return view('auth.register');
+}
+
+public function register(Request $request)
+{
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'alamat' => 'required|string|max:100',
+        'no_tlp' => 'required|string|max:13',
+        'tgl_bergabung' => 'required|date',
+        'email' => 'required|string|email|max:255|unique:users',
+        'password' => 'required|string|min:6|confirmed',
+    ]);
+
+    // Simpan data user ke dalam database
+    $user = User::create([
+        'name' => $request->name,
+        'alamat' => $request->alamat,
+        'no_tlp' => $request->no_tlp,
+        'tgl_bergabung' => $request->tgl_bergabung,
+        'email' => $request->email,
+        'password' => Hash::make($request->password),
+        'role' => 'anggota', 
+    ]);
+
+    // Redirect ke halaman login setelah registrasi berhasil
+    return redirect()->route('login')->with('success', 'Registrasi berhasil.');
+}
+public function logout(Request $request)
     {
         Auth::logout();
 

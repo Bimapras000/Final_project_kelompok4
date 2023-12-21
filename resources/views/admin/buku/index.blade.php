@@ -2,7 +2,7 @@
 @section('content')
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -27,23 +27,20 @@
     </div>
     </form>
   </div>
-</div>
+</div> -->
 <!-- batas modal -->
 
-<h1 class="h3 mb-2 text-gray-800">Tables</h1>
-<p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
-    For more information about DataTables, please visit the <a target="_blank" href="https://datatables.net">official
-        DataTables documentation</a>.</p>
+<h1 class="h3 mb-2 text-gray-800">Tabel Buku</h1><br>
+
 
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <a href="{{url('admin/buku/create')}}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+        <!-- <a href="{{url('admin/buku/create')}}" class="btn btn-primary"><i class="fas fa-plus"></i></a> -->
+        <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop"><i class="fas fa-plus"></i></a>
         <a href="{{url('admin/buku/bukuPDF')}}" class="btn btn-danger"><i class="fas fa-file-pdf"></i></a>
         <a href="{{url('admin/buku/export')}}" class="btn btn-success"><i class="fas fa-file-excel"></i></a>
-        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">
-                        <i class="fas fa-upload"></i>
-                        </button>
+
     </div>
     <div class="card-body">
         <div class="table-responsive">
@@ -121,21 +118,148 @@
                                             <button type="button" class="btn btn-success"
                                                 data-dismiss="modal">Close</button>
                                             <a href="{{url('admin/buku/delete/'.$buku->id)}}"
-                                                class="btn btn-danger" data-confirm-delete="true">Save changes</a>
+                                                class="btn btn-danger" data-confirm-delete="true">Hapus</a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </td>
 
+                            <!-- Modal Create-->
+                            <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-xl">
+                                <div class="modal-content">
+                                <form method="POST" action="{{url('admin/buku/store')}}" enctype="multipart/form-data">
+                                @csrf
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="staticBackdropLabel">Tambah Data Buku</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                    <div class="form-group row">
+                                            <label for="text" class="col-4 col-form-label">Kode</label> 
+                                            <div class="col-8">
+                                            <input id="text" name="kode" type="text" class="form-control @error('kode') is-invalid @enderror" >
+                                            @error('kode')
+                                                    <div class="invalid-feedback">
+                                                        {{$message}}
+                                                    </div>
+                                                    @enderror
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="text1" class="col-4 col-form-label">Judul Buku</label> 
+                                            <div class="col-8">
+                                            <input id="text1" name="judulbuku" type="text" class="form-control @error('judulbuku') is-invalid @enderror">
+                                            @error('judulbuku')
+                                                    <div class="invalid-feedback">
+                                                        {{$message}}
+                                                    </div>
+                                                    @enderror
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="text2" class="col-4 col-form-label">Penulis</label> 
+                                            <div class="col-8">
+                                            <input id="text2" name="penulis" type="text" class="form-control @error('penulis') is-invalid @enderror">
+                                            @error('penulis')
+                                                    <div class="invalid-feedback">
+                                                        {{$message}}
+                                                    </div>
+                                                    @enderror
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="text3" class="col-4 col-form-label">ISBN</label> 
+                                            <div class="col-8">
+                                            <input id="text3" name="isbn" type="text" class="form-control @error('isbn') is-invalid @enderror">
+                                            @error('isbn')
+                                                    <div class="invalid-feedback">
+                                                        {{$message}}
+                                                    </div>
+                                                    @enderror
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="text4" class="col-4 col-form-label">Tahun Terbit</label> 
+                                            <div class="col-8">
+                                            <input id="text4" name="th_terbit" type="text" class="form-control @error('th_terbit') is-invalid @enderror">
+                                            @error('th_terbit')
+                                                    <div class="invalid-feedback">
+                                                        {{$message}}
+                                                    </div>
+                                                    @enderror
+                                            </div>
+                                        </div>
+                                            <div class="form-group row">
+                                            <label for="textarea" class="col-4 col-form-label">Keterangan</label> 
+                                            <div class="col-8">
+                                                <textarea id="textarea" name="ket" cols="40" rows="5" class="form-control @error('ket') is-invalid @enderror"></textarea>
+                                                @error('ket')
+                                                    <div class="invalid-feedback">
+                                                        {{$message}}
+                                                    </div>
+                                                    @enderror
+                                            </div>
+                                            </div>
+                                        <div class="form-group row">
+                                            <label for="text4" class="col-4 col-form-label">Foto</label> 
+                                            <div class="col-8">
+                                            <input id="text4" name="foto" type="file" class="form-control @error('foto') is-invalid @enderror">
+                                            @error('foto')
+                                                    <div class="invalid-feedback">
+                                                        {{$message}}
+                                                    </div>
+                                                    @enderror
+                                        </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="select" class="col-4 col-form-label">Kategori</label> 
+                                            <div class="col-8">
+                                            <select id="select" name="kategori_id" class="custom-select @error('kategori_id') is-invalid @enderror">
+                                                @foreach ($kategori as $k)
+                                                <option value="{{$k->id}}">{{$k->nama}}</option>
+                                                @endforeach
+                                            </select>
+                                            @error('kategori_id')
+                                            <div class="invalid-feedback">
+                                            {{$message}}
+                                            </div>
+                                            @enderror
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="select" class="col-4 col-form-label">Penerbit</label> 
+                                            <div class="col-8">
+                                            <select id="select" name="penerbit_id" class="custom-select @error('penerbit_id') is-invalid @enderror">
+                                                @foreach ($penerbit as $p)
+                                                <option value="{{$p->id}}">{{$p->nama}}</option>
+                                                @endforeach
+                                            </select>
+                                            @error('penerbit_id')
+                                            <div class="invalid-feedback">
+                                            {{$message}}
+                                            </div>
+                                            @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="submit" name="submit" class="btn btn-primary">Simpan</button>
+                                    </div>
+                                    </form>
+                                </div>
+                            </div>
+                            </div>
+                        </td>
                     </tr>
 
                     @endforeach
                 </tbody>
             </table>
         </div>
-    </div>
-</div>
 
 </div>
 <!-- /.container-fluid -->

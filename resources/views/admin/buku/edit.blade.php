@@ -86,6 +86,7 @@
   </div>
   <div class="form-group row">
     <div class="offset-4 col-8">
+    <a href="{{url('admin/buku')}}" class="btn btn-secondary">Close</a>
       <button name="submit" type="submit" class="btn btn-warning">Update</button>
     </div>
   </div>

@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Login V1</title>
+	<title>Ngepinter.Com</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
     <!--===============================================================================================-->	
-        <link rel="icon" type="image/png" href="{{asset('logincss/images/icons/favicon.ico')}}"/>
+        <link href="{{url('admin/assets/img/books.png')}}" rel="icon">
     <!--===============================================================================================-->
         <link rel="stylesheet" type="text/css" href="{{asset('logincss/vendor/bootstrap/css/bootstrap.min.css')}}">
     <!--===============================================================================================-->
@@ -23,7 +23,7 @@
 </head>
 <body>
 
-@yield('login')
+@yield('konten')
 
 <!--===============================================================================================-->	
 <script src="{{asset('logincss/vendor/jquery/jquery-3.2.1.min.js')}}"></script>

@@ -25,6 +25,7 @@
                                             <th>Tanggal Pengembalian</th>
                                             <th>Status</th>
                                             <th>Konfirmasi</th>
+                                            <th>Denda</th>
 
 
 
@@ -57,6 +58,74 @@
                                             <td>{{$peminjaman->tgl_pengembalian}}</td>
                                             <td>{{$peminjaman->status}}</td>
                                             <td>{{$peminjaman->konfirmasi}}</td>
+                                            <td>{{$peminjaman->denda}}</td>
+                                        </tr>
+                                        
+                                        @endforeach
+                                        <tr>
+                                            <td colspan="9" style="text-align: center;">
+                                                <span style="  color: red; padding: 5px;">
+                                                    <i>Peringatan : Jika Terlambat Mengembalikan Buku Akan dikenakan Denda Rp. 5000 / Hari !!</i>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    
+
+                    <h1 class="h3 mb-2 mt-2 text-gray-800">Riwayat Pengembalian</h1><br><br><br>
+                    <div class="card shadow mb-4"><br>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Kode</th>
+                                            <th>Nama Peminjam</th>
+                                            <th>Judul Buku</th>
+                                            <th>Tanggal Peminjaman</th>
+                                            <th>Tanggal Pengembalian</th>
+                                            <th>Status</th>
+                                            <th>Buku Kembali</th>
+                                            <th>Denda</th>
+
+
+
+
+                                        </tr>
+                                    </thead>
+                                    <!-- <tfoot>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Kode</th>
+                                            <th>Nama Peminjam</th>
+                                            <th>Judul Buku</th>
+                                            <th>Tanggal Peminjaman</th>
+                                            <th>Tanggal Pengembalian</th>
+                                            <th>Status</th>
+                                            <th>Konfirmasi</th>
+
+                                        </tr>
+                                    </tfoot> -->
+                                    <tbody>
+                                    @php $no = 1 @endphp
+                                    @foreach ($pengembalian as $pengem)
+                                    
+                                        <tr>
+                                            <td>{{$no++}}</td>
+                                            <td>{{$pengem->kode}}</td>
+                                            <td>{{$pengem->users}}</td>
+                                            <td>{{$pengem->judul_buku}}</td>
+                                            <td>{{$pengem->tgl_peminjaman}}</td>
+                                            <td>{{$pengem->tgl_pengembalian}}</td>
+                                            <td>{{$pengem->status}}</td>
+                                            <td>{{$pengem->buku_kembali}}</td>
+                                            <td>{{$pengem->denda}}</td>
                                             
                                         </tr>
                                         
@@ -69,7 +138,7 @@
                     </div>
                     </div>
                     </div>
+                    </div>
 
-
-
+                    
 @endsection

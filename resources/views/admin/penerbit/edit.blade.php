@@ -13,15 +13,15 @@
     </ul>
 </div>
 @endif
-@foreach($kategori as $k)
+@foreach($penerbit as $pener)
 <div class="card shadow mb-4">
     <div class="card-body">
-<form method="POST" action="{{url('admin/kategori/update/'.$k->id)}}" enctype="multipart/form-data">
+<form method="POST" action="{{url('admin/penerbit/update/'.$pener->id)}}" enctype="multipart/form-data">
     @csrf
   <div class="form-group row">
-    <label for="text" class="col-4 col-form-label">Nama</label> 
+    <label for="text" class="col-4 col-form-label">Nama Penerbit</label> 
     <div class="col-8">
-      <input id="text" name="nama" type="text" class="form-control @error('nama') is-invalid @enderror" value="{{$k->nama}}" >
+      <input id="text" name="nama" type="text" class="form-control @error('nama') is-invalid @enderror" value="{{$pener->nama}}" >
       @error('nama')
             <div class="invalid-feedback">
                 {{$message}}
@@ -31,8 +31,8 @@
   </div>
   <div class="form-group row">
     <div class="offset-4 col-8">
-      <a href="{{url('admin/kategori')}}" class="btn btn-secondary">Close</a>
-      <button name="submit" type="submit" class="btn btn-primary">Submit</button>
+      <a href="{{url('admin/penerbit')}}" class="btn btn-secondary">Close</a>
+      <button name="submit" type="submit" class="btn btn-primary">Update</button>
     </div>
   </div>
 </form>

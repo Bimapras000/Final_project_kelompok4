@@ -8,6 +8,11 @@ use App\Models\Pengembalian;
 use App\Models\Buku;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\PeminjamanExport;
+use PDF;
+
 
 class PeminjamanController extends Controller
 {
@@ -19,11 +24,7 @@ class PeminjamanController extends Controller
         //
         $buku = DB::table('buku')->get();
         $users = DB::table('users')->get();
-        // $peminjaman = Peminjaman::join('users', 'users_id', '=', 'users.id')
-        //     ->join('buku', 'buku_id', '=', 'buku.id')
-        //     ->select('peminjaman.*', 'users.id as users', 'buku.judulbuku as buku')
-        //     ->get();
-        // return view ('admin.peminjaman.index', compact('peminjaman','buku','users'));
+
         $peminjaman = Peminjaman::join('users', 'users.id', '=', 'peminjaman.users_id')
         ->join('buku', 'buku.id', '=', 'peminjaman.buku_id')
         ->select('peminjaman.*', 'users.name as nama_peminjam', 'buku.judulbuku as judul_buku')
@@ -52,9 +53,8 @@ class PeminjamanController extends Controller
                 'kode.required' => 'kode peminjaman wajib diisi',
                 'kode.max' => 'kode peminjaman maksimal 45 karakter',
                 
-            ]   
-            
-            );
+            ]);
+            $defaultDenda = 0;
 
         DB::table('peminjaman')->insert([
         'kode' => $request->kode,
@@ -64,6 +64,7 @@ class PeminjamanController extends Controller
         'buku_id' => $request->buku_id,
         'status' => $request->status = 'pinjam',
         'konfirmasi' => $request->konfirmasi,
+        'denda' => $defaultDenda,
 
         ]);
         return redirect('admin/peminjaman')->with('success', 'Berhasil Menambahkan Peminjaman');
@@ -94,28 +95,38 @@ class PeminjamanController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $peminjaman = Peminjaman::findOrFail($id);
+    
         $request->validate([
             'buku_id' => 'required',
             'tgl_peminjaman' => 'required',
             'tgl_pengembalian' => 'required',
             'users_id' => 'required',
-
-
-
-        ],
-        [
-            
+        ], [
             'buku_id.required' => 'Judul Buku wajib diisi',
             'tgl_peminjaman.required' => 'Tanggal peminjaman wajib diisi',
-            'tgl_peminjaman.required' => 'Tanggal peminjaman wajib diisi',
+            'tgl_pengembalian.required' => 'Tanggal pengembalian wajib diisi',
             'users_id.required' => 'Nama peminjam wajib diisi',
-
-            
         ]);
-
-
-        DB::table('peminjaman')->where('id', $request->id)->update([
+    
+        // Inisialisasi total denda
+        $totalDenda = 0;
+    
+        // Perhitungan denda jika status berubah menjadi "Kembali"
+        if ($request->status === 'Kembali' && $request->konfirmasi === 'Diterima' && $peminjaman->konfirmasi !== 'Diterima') {
+            $tglPengembalianHarusnya = Carbon::createFromFormat('Y-m-d', $peminjaman->tgl_pengembalian);
+            $tglPengembalianAktual = Carbon::now();
+            $keterlambatan = $tglPengembalianAktual->diffInDays($tglPengembalianHarusnya, false);
+    
+            $tarifDenda = 5000; // Ganti dengan tarif denda per hari
+            $totalDenda = $keterlambatan > 0 ? $keterlambatan * $tarifDenda : 0;
+    
+            // Simpan nilai denda
+            $peminjaman->denda = $totalDenda;
+        }
+    
+        // Simpan perubahan pada peminjaman
+        $peminjaman->update([
             'kode' => $request->kode,
             'users_id' => $request->users_id,
             'tgl_peminjaman' => $request->tgl_peminjaman,
@@ -123,9 +134,30 @@ class PeminjamanController extends Controller
             'buku_id' => $request->buku_id,
             'status' => $request->status,
             'konfirmasi' => $request->konfirmasi,
+            'denda' => $totalDenda,
         ]);
+    
+        // Pindahkan ke tabel pengembalian jika status "Kembali"
+        if ($request->status === 'Kembali') {
+            // Insert ke tabel pengembalian
+            Pengembalian::create([
+                'kode' => $request->kode,
+                'users_id' => $request->users_id,
+                'tgl_peminjaman' => $request->tgl_peminjaman,
+                'tgl_pengembalian' => $request->tgl_pengembalian,
+                'buku_id' => $request->buku_id,
+                'status' => $request->status,
+                'buku_kembali' => now()->toDateString(),
+                'denda' => $totalDenda,
+            ]);
+    
+            // Hapus dari tabel peminjaman
+            $peminjaman->delete();
+        }
+    
         return redirect('admin/peminjaman')->with('success', 'Berhasil Edit Data Peminjaman');
     }
+    
 
     /**
      * Remove the specified resource from storage.
@@ -133,5 +165,25 @@ class PeminjamanController extends Controller
     public function destroy(string $id)
     {
         //
+        DB::table('peminjaman')->where('id',$id)->delete();
+        return redirect('admin/peminjaman')->with('success', 'Peminjaman Berhasil Dihapus!');;
     }
+
+    public function peminjamanPDF(){
+        $buku = DB::table('buku')->get();
+        $users = DB::table('users')->get();
+
+        $peminjaman = Peminjaman::join('users', 'users.id', '=', 'peminjaman.users_id')
+        ->join('buku', 'buku.id', '=', 'peminjaman.buku_id')
+        ->select('peminjaman.*', 'users.name as nama_peminjam', 'buku.judulbuku as judul_buku')
+        ->get();
+        $pdf = PDF::loadView('admin.peminjaman.peminjamanPDF', ['peminjaman' => $peminjaman])->setPaper('a4', 'landscape');
+        return $pdf->stream();
+    }
+
+    public function exportPeminjaman(){
+        
+        return Excel::download(new PeminjamanExport, 'peminjaman.xlsx');
+    }
+
 }

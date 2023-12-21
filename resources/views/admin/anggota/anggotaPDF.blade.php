@@ -34,22 +34,22 @@
                 <th>Nomor Telepon</th>
                 <th>Tanggal Bergabung</th>
                 <th>Email</th>
-                <th>Username</th>
             </tr>
         </thead>
         <tbody>
             @php $no = 1 @endphp
             @foreach ($anggota as $a)
+            @if($a->role === 'anggota')
                                     
             <tr>
                 <td>{{$no++}}</td>
-                <td>{{$a->nama}}</td>
+                <td>{{$a->name}}</td>
                 <td>{{$a->alamat}}</td>
                 <td>{{$a->no_tlp}}</td>
                 <td>{{$a->tgl_bergabung}}</td>
                 <td>{{$a->email}}</td>
-                <td>{{$a->username}}</td>
             </tr>
+            @endif
             @endforeach
         </tbody>
     </table>

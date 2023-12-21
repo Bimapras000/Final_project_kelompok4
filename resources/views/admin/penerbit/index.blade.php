@@ -6,7 +6,8 @@
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <a href="{{url('admin/penerbit/create')}}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+                            <!-- <a href="{{url('admin/penerbit/create')}}" class="btn btn-primary"><i class="fas fa-plus"></i></a> -->
+                            <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop"><i class="fas fa-plus"></i></a>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -70,6 +71,39 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                </div>
+
+                                                <!-- Modal Create-->
+                                                <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                                <div class="modal-dialog modal-lg">
+                                                    <div class="modal-content">
+                                                    <form method="POST" action="{{url('admin/penerbit/store')}}" enctype="multipart/form-data">
+                                                    @csrf
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="staticBackdropLabel">Tambah Penerbit</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                        <div class="form-group row">
+                                                            <label for="text" class="col-4 col-form-label">Nama Penerbit</label> 
+                                                            <div class="col-8">
+                                                            <input id="text" name="nama" type="text" class="form-control @error('nama') is-invalid @enderror" >
+                                                            @error('nama')
+                                                                    <div class="invalid-feedback">
+                                                                        {{$message}}
+                                                                    </div>
+                                                                    @enderror
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                            <button type="submit" name="submit" class="btn btn-primary">Simpan</button>
+                                                        </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
                                                 </div>
                                             </td>
                                             

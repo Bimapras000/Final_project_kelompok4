@@ -9,6 +9,8 @@ use App\Models\Kategori;
 use App\Models\Petugas;
 use App\Models\Peminjaman;
 use App\Models\Pengembalian;
+use Illuminate\Support\Facades\Hash;
+use Auth;
 use DB;
 
 class DashboardController extends Controller
@@ -16,9 +18,10 @@ class DashboardController extends Controller
     //fungsi index 
     public function index(){
         $users = User::count();
+        $totalAnggota = User::where('role', 'anggota')->count();
+        $totalPetugas = User::where('role', 'petugas')->count();
         $buku = Buku::count();
         $kategori = Kategori::count();
-        $petugas = Petugas::count();
         $peminjaman = Peminjaman::count();
         $pengembalian = Pengembalian::count();
         // $penerbit_id = DB::table('buku')
@@ -33,7 +36,36 @@ class DashboardController extends Controller
         ->select('kategori.nama as nama', DB::raw('COUNT(buku.id) as total'))
         ->groupBy('kategori.nama')
         ->get();
-        return view('admin.dashboard', compact('users', 'buku', 'kategori', 'petugas', 'pengembalian','penerbit_info', 'kategori_info'));
+        return view('admin.dashboard', compact('users','totalAnggota','totalPetugas', 'buku', 'kategori', 'pengembalian','penerbit_info', 'kategori_info'));
 
     }
+
+    public function show(){
+        
+        $user = User::findOrFail(Auth::id());
+        return view('admin.resetpassword', compact('user'));
+    }
+
+    public function update(Request $request)
+{
+    $request->validate([
+        'old_password' => 'nullable|string',
+        'password' => 'nullable|required_with:old_password|string|confirmed|min:6'
+    ]);
+
+    $user = Auth::user();
+
+    if ($request->filled('old_password')) {
+        if (Hash::check($request->old_password, $user->password)) {
+            $user->password = Hash::make($request->password);
+            $user->save(); // Simpan perubahan password ke dalam database
+        } else {
+            return back()
+                ->withErrors(['old_password' => __('Tolong Periksa Password')])
+                ->withInput();
+        }
+    }
+    return redirect()->back()->with('success', 'Password berhasil diubah');
+}
+
 }

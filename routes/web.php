@@ -38,6 +38,9 @@ Route::middleware(['role:anggota'])->group(function () {
     Route::get('/user/pinjamBuku',[UserController::class, 'pinjam']);
     Route::get('/user/create/{id}',[UserController::class, 'create']);
     Route::post('/user/store',[UserController::class, 'store']);
+
+    Route::get('/password', [UserController::class, 'showpass'])->name('user.show');
+    Route::patch('/password/update', [UserController::class, 'updatepass'])->name('user.update');
 });
 
 //route sementara api
@@ -47,16 +50,18 @@ Route::get('/bukuapi/{id}', [BukuController::class, 'apiBukuDetail']);
 // Route::get('/user',[DashboardController::class, 'index']);
 
 // Custum Authenticate 
-Route::get('/login', [AuthController::class, 'showlogin'])->name('log_in');
+Route::get('/login', [AuthController::class, 'showlogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
-Route::get('/register', [AuthController::class, 'showregister'])->name('regis');
-Route::post('/register', [AuthController::class, 'register'])->name('register');
+Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
+Route::post('/register', [AuthController::class, 'register'])->name('register.submit');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::group(['middleware' => ['auth', 'role:admin-petugas']], function(){
 Route::prefix('admin')->group(function(){
 
 Route::get('/dashboard',[DashboardController::class, 'index']);
+Route::get('/profile', [DashboardController::class, 'show'])->name('profile.show');
+Route::patch('/profile/update', [DashboardController::class, 'update'])->name('profile.update');
 
 
 
@@ -84,6 +89,9 @@ Route::post('/buku/import/', [BukuController::class, 'importBuku']);
 
 //Route Pengembalian
 Route::get('/pengembalian',[PengembalianController::class, 'index']);
+Route::get('/pengembalian/delete/{id}',[PengembalianController::class, 'destroy']);
+Route::get('/pengembalian/pengembalianPDF',[PengembalianController::class, 'pengembalianPDF']);
+Route::get('/pengembalian/export/',[PengembalianController::class, 'exportpengembalian']);
 
 //Route Petugas
 Route::get('/petugas',[PetugasController::class, 'index']);
@@ -118,6 +126,8 @@ Route::post('/peminjaman/store',[PeminjamanController::class, 'store']);
 Route::get('/peminjaman/edit/{id}',[PeminjamanController::class, 'edit']);
 Route::post('/peminjaman/update/{id}',[PeminjamanController::class, 'update']);
 Route::get('/peminjaman/delete/{id}',[PeminjamanController::class, 'destroy']);
+Route::get('/peminjaman/peminjamanPDF',[PeminjamanController::class, 'peminjamanPDF']);
+Route::get('/peminjaman/export/',[PeminjamanController::class, 'exportpeminjaman']);
 
 
 });

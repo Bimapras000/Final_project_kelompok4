@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Buku;
+use App\Models\Kategori;
+use App\Models\Penerbit;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\BukuExport;
@@ -18,11 +20,14 @@ class BukuController extends Controller
     public function index()
     {
         //
+        $kategori = DB::table('kategori')->get();
+        $penerbit = DB::table('penerbit')->get();
+
         $buku = Buku::join('penerbit','penerbit_id','=','penerbit.id')
         ->join('kategori','kategori_id','=','kategori.id')
         ->select('buku.*','penerbit.nama as penerbit','kategori.nama as kategori')
         ->get();
-        return view ('admin.buku.index', compact('buku'));
+        return view ('admin.buku.index', compact('buku','kategori','penerbit'));
     }
 
     /**
@@ -31,9 +36,10 @@ class BukuController extends Controller
     public function create()
     {
         //
-        $kategori = DB::table('kategori')->get();
-        $penerbit = DB::table('penerbit')->get();
-        return view ('admin.buku.create', compact('kategori','penerbit'));
+        // $kategori = DB::table('kategori')->get();
+        // $penerbit = DB::table('penerbit')->get();
+        // return view ('admin.buku.create', compact('kategori','penerbit'));
+        return view('admin.buku.index');
     }
 
     /**
@@ -47,7 +53,7 @@ class BukuController extends Controller
         'penulis' => 'required|max:45',
         'isbn' => 'required|max:45',
         'th_terbit' => 'required|numeric',
-        'ket' => 'nullable|string|min:10',
+        'ket' => 'nullable|string|min:10|max:255',
         'foto' => 'nullable|image|mimes:jpg,jpeg,gif,png,svg|max:2048',
         'kategori_id' => 'required|integer',
         'penerbit_id' => 'required|integer',
@@ -65,6 +71,7 @@ class BukuController extends Controller
         'th_terbit.required' => 'Th Terbit wajib diisi',
         'th_terbit.numeric' => 'Th Terbit harus diisi dengan angka',
         'ket.min' => 'Keterangan minimal diisi 10 kata',
+        'ket.max' => 'Keterangan maksimal diisi 255 kata',
         'foto.max' => 'Maksimal 2 MB',
         'foto.image' => 'File ekstensi harus jpg,jpeg,gif,svg',
         'kategori_id.required' => 'Kategori ID harus diisi',
@@ -138,7 +145,7 @@ class BukuController extends Controller
         'penulis' => 'required|max:45',
         'isbn' => 'required|max:45',
         'th_terbit' => 'required|numeric',
-        'ket' => 'nullable|string|min:10',
+        'ket' => 'nullable|string|min:10|max:255',
         'foto' => 'nullable|image|mimes:jpg,jpeg,gif,png,svg|max:2048',
         'kategori_id' => 'required|integer',
         'penerbit_id' => 'required|integer',
@@ -153,6 +160,7 @@ class BukuController extends Controller
         'th_terbit.required' => 'Th Terbit wajib diisi',
         'th_terbit.numeric' => 'Th Terbit harus diisi dengan angka',
         'ket.min' => 'Keterangan minimal diisi 10 kata',
+        'ket.max' => 'Keterangan maksimal diisi 255 kata',
         'foto.max' => 'Maksimal 2 MB',
         'foto.image' => 'File ekstensi harus jpg,jpeg,gif,svg',
         'kategori_id.required' => 'Kategori ID harus diisi',

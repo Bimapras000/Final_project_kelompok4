@@ -90,6 +90,12 @@
     </div>
   </div> 
   <div class="form-group row">
+    <label for="text3" class="col-4 col-form-label">Denda</label> 
+    <div class="col-8">
+      <input id="text3" value="{{$peminjaman->denda}}" type="text" class="form-control" readonly>
+    </div>
+  </div>
+  <div class="form-group row">
     <div class="offset-4 col-8">
       <button name="submit" type="submit" class="btn btn-warning">Update</button>
     </div>
