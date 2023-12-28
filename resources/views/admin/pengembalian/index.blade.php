@@ -78,7 +78,7 @@
                                                                 </button>
                                                             </div>
                                                             <div class="modal-body">    
-                                                                Apakah anda yakin akan menghapus data {{$pengem->nama}}
+                                                                Apakah anda yakin akan menghapus data {{$pengem->name}}
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-success"

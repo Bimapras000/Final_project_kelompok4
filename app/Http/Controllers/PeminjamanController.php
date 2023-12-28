@@ -102,28 +102,14 @@ class PeminjamanController extends Controller
             'tgl_peminjaman' => 'required',
             'tgl_pengembalian' => 'required',
             'users_id' => 'required',
+            'denda' => 'nullable',
         ], [
             'buku_id.required' => 'Judul Buku wajib diisi',
             'tgl_peminjaman.required' => 'Tanggal peminjaman wajib diisi',
             'tgl_pengembalian.required' => 'Tanggal pengembalian wajib diisi',
             'users_id.required' => 'Nama peminjam wajib diisi',
+
         ]);
-    
-        // Inisialisasi total denda
-        $totalDenda = 0;
-    
-        // Perhitungan denda jika status berubah menjadi "Kembali"
-        if ($request->status === 'Kembali' && $request->konfirmasi === 'Diterima' && $peminjaman->konfirmasi !== 'Diterima') {
-            $tglPengembalianHarusnya = Carbon::createFromFormat('Y-m-d', $peminjaman->tgl_pengembalian);
-            $tglPengembalianAktual = Carbon::now();
-            $keterlambatan = $tglPengembalianAktual->diffInDays($tglPengembalianHarusnya, false);
-    
-            $tarifDenda = 5000; // Ganti dengan tarif denda per hari
-            $totalDenda = $keterlambatan > 0 ? $keterlambatan * $tarifDenda : 0;
-    
-            // Simpan nilai denda
-            $peminjaman->denda = $totalDenda;
-        }
     
         // Simpan perubahan pada peminjaman
         $peminjaman->update([
@@ -134,7 +120,7 @@ class PeminjamanController extends Controller
             'buku_id' => $request->buku_id,
             'status' => $request->status,
             'konfirmasi' => $request->konfirmasi,
-            'denda' => $totalDenda,
+            'denda' => $request->denda,
         ]);
     
         // Pindahkan ke tabel pengembalian jika status "Kembali"
@@ -148,7 +134,7 @@ class PeminjamanController extends Controller
                 'buku_id' => $request->buku_id,
                 'status' => $request->status,
                 'buku_kembali' => now()->toDateString(),
-                'denda' => $totalDenda,
+                'denda' => $request->denda,
             ]);
     
             // Hapus dari tabel peminjaman

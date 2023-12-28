@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
+
 
 class Pengembalian extends Model
 {
@@ -26,4 +28,15 @@ class Pengembalian extends Model
         public function buku(){
             return $this->belongsTo(Buku::class);
         }
+
+        // public function hitungDenda($tglPengembalianAktual)
+        // {
+        //     $tglPengembalianHarusnya = Carbon::createFromFormat('Y-m-d', $this->tgl_pengembalian);
+        //     $keterlambatan = $tglPengembalianAktual->diffInDays($tglPengembalianHarusnya, false);
+        
+        //     $tarifDenda = 5000; // Ganti dengan tarif denda per hari
+        //     $totalDenda = $keterlambatan > 0 ? $keterlambatan * $tarifDenda : 0;
+        
+        //     return $totalDenda;
+        // }
 }

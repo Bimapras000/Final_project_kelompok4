@@ -80,7 +80,16 @@ public function register(Request $request)
         'tgl_bergabung' => 'required|date',
         'email' => 'required|string|email|max:255|unique:users',
         'password' => 'required|string|min:6|confirmed',
+        'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
     ]);
+
+    if ($request->hasFile('foto')) {
+        $file = $request->file('foto');
+        $fileName = $file->getClientOriginalName(); // Memberikan nama unik untuk file
+        $file->move(public_path('storage/fotos/'), $fileName); 
+    } else {
+        $fileName = null; // Atau beri nilai default jika tidak ada file yang diunggah
+    }
 
     // Simpan data user ke dalam database
     $user = User::create([
@@ -91,6 +100,7 @@ public function register(Request $request)
         'email' => $request->email,
         'password' => Hash::make($request->password),
         'role' => 'anggota', 
+        'foto' => $fileName,
     ]);
 
     // Redirect ke halaman login setelah registrasi berhasil

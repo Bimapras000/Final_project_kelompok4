@@ -10,7 +10,7 @@
                     <img src="{{ asset('logincss/images/img-01.png') }}" alt="IMG">
                 </div>
 
-				<form class="login100-form validate-form" method="POST" action="{{ route('register.submit') }}">
+				<form class="login100-form validate-form" method="POST" action="{{ route('register.submit') }}" enctype="multipart/form-data">
                     @csrf	
                     <span class="login100-form-title">
 						Register Here
@@ -111,7 +111,19 @@
 							<i class="fa fa-lock" aria-hidden="true"></i>
 						</span>
 					</div>
-					
+					<label for="password">Foto</label>
+					<div class="wrap-input100 validate-input" data-validate = "Foto is required">
+						<input id="foto" class="input100 @error('foto') is-invalid @enderror" name="foto" required autocomplete="current-foto" type="file" placeholder="Foto">
+						@error('foto')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+							<i class="fa fa-lock" aria-hidden="true"></i>
+						</span>
+					</div>
 					<div class="container-login100-form-btn">
 						<button class="login100-form-btn btn" type="submit">
 							Register

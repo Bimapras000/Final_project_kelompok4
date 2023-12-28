@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Peminjaman extends Model
 {
@@ -29,4 +30,15 @@ class Peminjaman extends Model
     public function peminjaman(){
         return $this->hasMany(Peminjaman::class);
     }
+
+    // public function hitungDenda($tglPengembalianAktual)
+    //     {
+    //         $tglPengembalianHarusnya = Carbon::createFromFormat('Y-m-d', $this->tgl_pengembalian);
+    //         $keterlambatan = $tglPengembalianAktual->diffInDays($tglPengembalianHarusnya, false);
+        
+    //         $tarifDenda = 5000; // Ganti dengan tarif denda per hari
+    //         $totalDenda = $keterlambatan > 0 ? $keterlambatan * $tarifDenda : 0;
+        
+    //         return $totalDenda;
+    //     }
 }

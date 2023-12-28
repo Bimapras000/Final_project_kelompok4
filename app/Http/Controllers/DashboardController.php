@@ -10,6 +10,7 @@ use App\Models\Petugas;
 use App\Models\Peminjaman;
 use App\Models\Pengembalian;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Auth;
 use DB;
 
@@ -66,6 +67,48 @@ class DashboardController extends Controller
         }
     }
     return redirect()->back()->with('success', 'Password berhasil diubah');
+}
+
+    public function showprofile(){
+
+        $user = User::findOrFail(Auth::id());
+        return view('admin.profile', compact('user'));
+    }
+
+    public function updateprofil(Request $request, $id){
+    
+        $user = User::find($id);
+
+    // if ($request->hasFile('foto')) {
+    //     if ($user->foto && file_exists(storage_path('app/public/fotos/' . $user->foto))) {
+    //         Storage::delete('app/public/fotos/' . $user->foto);
+    //     }
+        
+    //     $file = $request->file('foto');
+    //     $fileName = $file->getClientOriginalName() . '.' . $file->getClientOriginalExtension();
+    //     $file->move(storage_path('app/public/fotos/'), $fileName);
+        
+    //     // Perbarui nama file foto di database
+    //     $user->foto = $fileName;
+    // }
+
+    // Simpan data lain yang diperlukan
+    // $user->save();
+
+    // return back()->with('status','Profil Update!');
+    
+    if ($request->hasFile('foto')) {
+        if ($user->foto && file_exists(storage_path('app/public/fotos/' . $user->foto))) {
+            Storage::delete('app/public/fotos/' . $user->foto);
+        }
+        $file = $request->file('foto');
+        $fileName = $file->getClientOriginalName() . '.' . $file->getClientOriginalExtension();
+        $file->move(storage_path('app/public/fotos/'), $fileName);
+        $user->foto = $fileName;
+    $user->save();
+    return back()->with('status','Profil Update!');
+
+    }
 }
 
 }

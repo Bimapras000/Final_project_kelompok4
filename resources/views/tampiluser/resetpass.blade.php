@@ -13,14 +13,18 @@
     </ul>
 </div>
 @endif
+
 <div class="shopify-grid padding-large">
       <div class="container">
+      <h3>Reset Password</h3><br><br>
         <div class="row">
+        
 <div class="card shadow mb-4">
     <div class="card-body">
 <form method="POST" action="{{ route('user.update') }}" enctype="multipart/form-data">
     @csrf
     @method('PATCH')
+    
     <div class="row mb-3">
 		<div class="col-sm-3">
 			<h6 class="mb-0">Old Password</h6>
@@ -57,8 +61,10 @@
     </div>
 	</div>
   <div class="form-group row">
-    <div class="offset-4 col-8">
+    <div class="offset-3 col-8">
+    
       <button name="submit" type="submit" class="btn btn-primary">Submit</button>
+      <button type="button" class="btn btn-secondary " onclick="window.location.href='{{ url('user') }}'">Cancel</button>
     </div>
   </div>
 </form>

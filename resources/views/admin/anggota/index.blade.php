@@ -57,7 +57,8 @@
                                             <td>{{$user->role}}</td>
                                             
                                             <td>
-                                                
+                                            <a href="{{url('admin/anggota/show/'.$user->id)}}" class="btn btn-sm btn-info"><i
+                                                class="fas fa-eye"></i></a>
                                             <a href="{{url('admin/anggota/edit/'.$user->id)}}" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></a>
                                             
                                             <!-- Button trigger modal -->
@@ -101,7 +102,7 @@
                     <div class="modal fade" id="tambahDataModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
-                            <form action="{{url('admin/anggota/store')}}" method="POST">
+                            <form action="{{url('admin/anggota/store')}}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="modal-header">
                                 <h1 class="modal-title fs-5" id="exampleModalLabel">Tambah Anggota</h1>
@@ -158,6 +159,15 @@
                                     <label for="recipient-name" class="col-form-label">Password :</label>
                                     <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" id="recipient-name" >
                                     @error('password')
+                                        <div class="invalid-feedback">
+                                            {{$message}}
+                                        </div>
+                                    @enderror
+                                </div>
+                                <div class="mb-3">
+                                    <label for="recipient-name" class="col-form-label">Foto :</label>
+                                    <input type="file" name="foto" class="form-control @error('foto') is-invalid @enderror" id="recipient-name" >
+                                    @error('foto')
                                         <div class="invalid-feedback">
                                             {{$message}}
                                         </div>

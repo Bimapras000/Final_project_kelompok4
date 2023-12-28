@@ -39,6 +39,9 @@ Route::middleware(['role:anggota'])->group(function () {
     Route::get('/user/create/{id}',[UserController::class, 'create']);
     Route::post('/user/store',[UserController::class, 'store']);
 
+    Route::get('/userprofile', [UserController::class, 'showuserprofile'])->name('profileuser.show');
+    Route::patch('/user/profile/{id}', [UserController::class, 'updateuserprofil'])->name('profiluser.update');
+
     Route::get('/password', [UserController::class, 'showpass'])->name('user.show');
     Route::patch('/password/update', [UserController::class, 'updatepass'])->name('user.update');
 });
@@ -60,8 +63,10 @@ Route::group(['middleware' => ['auth', 'role:admin-petugas']], function(){
 Route::prefix('admin')->group(function(){
 
 Route::get('/dashboard',[DashboardController::class, 'index']);
-Route::get('/profile', [DashboardController::class, 'show'])->name('profile.show');
-Route::patch('/profile/update', [DashboardController::class, 'update'])->name('profile.update');
+Route::get('/profile', [DashboardController::class, 'showprofile'])->name('profile.show');
+Route::patch('/profile/{id}', [DashboardController::class, 'updateprofil'])->name('profil.update');
+Route::get('/reset', [DashboardController::class, 'show'])->name('reset.show');
+Route::patch('/reset/update', [DashboardController::class, 'update'])->name('reset.update');
 
 
 
@@ -69,6 +74,7 @@ Route::patch('/profile/update', [DashboardController::class, 'update'])->name('p
 Route::get('/anggota',[AnggotaController::class, 'index']);
 Route::get('/anggota/create',[AnggotaController::class, 'create']);
 Route::post('/anggota/store',[AnggotaController::class, 'store']);
+Route::get('/anggota/show/{id}',[AnggotaController::class, 'show']);
 Route::get('/anggota/edit/{id}',[AnggotaController::class, 'edit']);
 Route::post('/anggota/update/{id}',[AnggotaController::class, 'update']);
 Route::get('/anggota/delete/{id}',[AnggotaController::class, 'destroy']);
@@ -97,6 +103,7 @@ Route::get('/pengembalian/export/',[PengembalianController::class, 'exportpengem
 Route::get('/petugas',[PetugasController::class, 'index']);
 Route::get('/petugas/create',[PetugasController::class, 'create']);
 Route::post('/petugas/store',[PetugasController::class, 'store']);
+Route::get('/petugas/show/{id}',[PetugasController::class, 'show']);
 Route::get('/petugas/edit/{id}',[PetugasController::class, 'edit']);
 Route::post('/petugas/update/{id}',[PetugasController::class, 'update']);
 Route::get('/petugas/delete/{id}',[PetugasController::class, 'destroy']);

@@ -87,6 +87,17 @@
 } );
     </script>
 
+<script>
+    document.getElementById('input-foto').addEventListener('change', function(e) {
+        var reader = new FileReader();
+        reader.onload = function() {
+            var output = document.getElementById('preview-image');
+            output.src = reader.result;
+        };
+        reader.readAsDataURL(e.target.files[0]);
+    });
+</script>
+
 </body>
 
 </html>

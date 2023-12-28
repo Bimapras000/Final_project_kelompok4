@@ -68,6 +68,22 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        // if ($request->hasFile('foto')) {
+        //     $file = $request->file('foto');
+        //     $fileName = $file->getClientOriginalName(); // Memberikan nama unik untuk file
+        //     $file->move(public_path('storage/fotos/'), $fileName); 
+        // } else {
+        //     $fileName = null; // Atau beri nilai default jika tidak ada file yang diunggah
+        // }
+
+        if ($data->hasFile('foto')) { // Perubahan dari $request menjadi $data
+            $file = $data->file('foto'); // Perubahan dari $request menjadi $data
+            $fileName = $file->getClientOriginalName(); // Memberikan nama unik untuk file
+            $file->move(public_path('storage/fotos/'), $fileName); 
+        } else {
+            $fileName = null; // Atau beri nilai default jika tidak ada file yang diunggah
+        }
+
         return User::create([
             'name' => $data['name'],
             'alamat' => $data['alamat'],
@@ -75,6 +91,7 @@ class RegisterController extends Controller
             'tgl_bergabung' => $data['tgl_bergabung'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'foto' => $fileName,
         ]);
     }
 }

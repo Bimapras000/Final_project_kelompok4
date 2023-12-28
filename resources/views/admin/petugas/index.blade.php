@@ -54,8 +54,10 @@
                                             <td>{{$petugas->role}}</td>
                                             <td>
                                                 
-                                            <a href="{{url('admin/petugas/edit/'.$petugas->id)}}" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></a>
                                             
+                                            <a href="{{url('admin/anggota/show/'.$petugas->id)}}" class="btn btn-sm btn-info"><i
+                                                class="fas fa-eye"></i></a>
+                                                <a href="{{url('admin/petugas/edit/'.$petugas->id)}}" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></a>
                                             <!-- Button trigger modal -->
                                             <button type="button"  class="btn btn-sm btn-danger" data-toggle="modal" data-target="#exampleModal{{$petugas->id}}">
                                             <i class="fas fa-trash"></i>
@@ -96,7 +98,7 @@
                     <div class="modal fade" id="tambahDataModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
-                            <form action="{{url('admin/petugas/store')}}" method="POST">
+                            <form action="{{url('admin/petugas/store')}}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="modal-header">
                                 <h1 class="modal-title fs-5" id="exampleModalLabel">Tambah Petugas</h1>
@@ -153,6 +155,15 @@
                                     <label for="recipient-name" class="col-form-label">Password :</label>
                                     <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" id="recipient-name" >
                                     @error('password')
+                                        <div class="invalid-feedback">
+                                            {{$message}}
+                                        </div>
+                                    @enderror
+                                </div>
+                                <div class="mb-3">
+                                    <label for="recipient-name" class="col-form-label">Foto :</label>
+                                    <input type="file" name="foto" class="form-control @error('foto') is-invalid @enderror" id="recipient-name" >
+                                    @error('foto')
                                         <div class="invalid-feedback">
                                             {{$message}}
                                         </div>

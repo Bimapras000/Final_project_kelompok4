@@ -56,21 +56,6 @@
       </select>
     </div>
   </div>
-  <!-- <div class="form-group ">
-      <label class="control-label " for="select">
-       Status
-      </label>
-      <select class="select form-control" id="select" value="{{$peminjaman->status}}" name="status">
-        <option> Pilih Status</option>
-       <option value="First Choice">
-        Dipinjam
-       </option>
-       <option value="Second Choice">
-        Kembali
-       </option>
-      </select>
-     </div>
-  </div> -->
   <div class="form-group row">
     <label for="select" class="col-4 col-form-label">Status</label> 
     <div class="col-8">
@@ -92,7 +77,8 @@
   <div class="form-group row">
     <label for="text3" class="col-4 col-form-label">Denda</label> 
     <div class="col-8">
-      <input id="text3" value="{{$peminjaman->denda}}" type="text" class="form-control" readonly>
+      <input id="text3" name="denda" value="{{$peminjaman->denda}}" type="text" class="form-control" >
+      <span style="color:red;"><i> Dikenakan denda Rp. 5000 / hari untuk anggota yang terlambat mengembalikan buku.</i></span>
     </div>
   </div>
   <div class="form-group row">

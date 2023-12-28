@@ -43,12 +43,16 @@ class AnggotaController extends Controller
             'tgl_bergabung' => 'required',
             'email' => 'required|unique:users|max:50',
             'password' => 'required|min:8',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
             // 'foto' => 'required|min:8',
         ],
         [
             'name.max' => 'Nama maximal 45 karakter',
             'name.required' => 'Nama wabjib diisi',
             
+            'foto.max' => 'Maksimal 2 MB',
+            'foto.image' => 'File ekstensi harus jpg,jpeg,gif,svg,png,webp',
+
             'alamat.required' => 'Alamat wajib diisi',
             'alamat.max' => 'Alamat maksimal 45 karakter',
             'no_tlp.required' => 'Nomor Telepon wajib diisi',
@@ -66,8 +70,16 @@ class AnggotaController extends Controller
             
         ]);
 
+        if ($request->hasFile('foto')) {
+            $file = $request->file('foto');
+            $fileName = $file->getClientOriginalName(); // Memberikan nama unik untuk file
+            $file->move(public_path('storage/fotos/'), $fileName); 
+        } else {
+            $fileName = null; // Atau beri nilai default jika tidak ada file yang diunggah
+        }
+
         DB::table('users')->insert([
-        // 'foto' => $request->foto,
+        'foto' => $fileName,
         'name' => $request->name,
         'alamat' => $request->alamat,
         'no_tlp' => $request->no_tlp,
@@ -86,6 +98,13 @@ class AnggotaController extends Controller
     public function show(string $id)
     {
         //
+        $user = User::find($id);
+
+        if (!$user) {
+            return redirect('admin/anggota')->with('error', 'Anggota tidak ditemukan');
+        }
+    
+        return view('admin.anggota.show', compact('user'));
     }
 
     /**
@@ -112,11 +131,15 @@ class AnggotaController extends Controller
             'email' => 'required|max:50',
             'password' => 'required|min:8',
             'role' => 'required',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
             // 'foto' => 'required|min:8',
         ],
         [
             'name.max' => 'Nama maximal 45 karakter',
             'name.required' => 'Nama wabjib diisi',
+
+            'foto.max' => 'Maksimal 2 MB',
+            'foto.image' => 'File ekstensi harus jpg,jpeg,gif,svg,png,webp',
             
             'alamat.required' => 'Alamat wajib diisi',
             'alamat.max' => 'Alamat maksimal 45 karakter',
@@ -135,8 +158,16 @@ class AnggotaController extends Controller
             
         ]);
 
+        if ($request->hasFile('foto')) {
+            $file = $request->file('foto');
+            $fileName = $file->getClientOriginalName(); // Memberikan nama unik untuk file
+            $file->move(public_path('storage/fotos/'), $fileName); 
+        } else {
+            $fileName = null; // Atau beri nilai default jika tidak ada file yang diunggah
+        }
+
         DB::table('users')->where('id', $request->id)->update([
-        // 'foto' => $request->foto,
+        'foto' => $fileName,
         'name' => $request->name,
         'alamat' => $request->alamat,
         'no_tlp' => $request->no_tlp,

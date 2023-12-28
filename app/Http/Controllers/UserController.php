@@ -27,12 +27,11 @@ class UserController extends Controller
         $judul = $request->input('judul'); // Mengambil nilai dari input 'judul'
     
         if($judul){ 
-            // $buku = Buku::join('penerbit','penerbit_id','=','penerbit.id')
-            // ->join('kategori','kategori_id','=','kategori.id')
-            // ->select('buku.*','penerbit.nama as penerbit','kategori.nama as kategori')
-            // ->where('buku.id', $id)
-            // ->get();
             $buku = Buku::where('judulbuku', 'like', '%'.$judul.'%')->paginate(4);
+            if ($buku->isEmpty()) {
+                return view('tampiluser/tampiluser', compact('buku','kategori','penerbit'))
+                    ->withErrors('Tidak ada buku yang sesuai dengan pencarian.');
+            }
         } else {
             $buku = Buku::paginate(4);
         }
@@ -90,7 +89,7 @@ class UserController extends Controller
         $peminjaman->denda = $defaultDenda; 
         $peminjaman->save();
         
-        return redirect('user')->with('success', 'Berhasil Mengedit Kategori');;
+        return redirect('user')->with('success', 'Berhasil Meminjam Buku');;
     }
 
     public function pinjam()
@@ -152,12 +151,29 @@ class UserController extends Controller
         return redirect('user')->with('success', 'Berhasil Mengubah Password!');
 
     }
-    // public function showBooksByCategory($id)
-    // {
-    //     $bukuByCategory = Buku::where('kategori_id', $id)->paginate(3);
 
-    //     return view('tampiluser/tampiluser', ['bukuByCategory' => $bukuByCategory]);
-    // }
+    public function showuserprofile(){
+
+        $user = User::findOrFail(Auth::id());
+        return view('tampiluser/userprofile', compact('user'));
+    }
+
+    public function updateuserprofil(Request $request, $id){
+    
+        $user = User::find($id);
+
+    if ($request->hasFile('foto')) {
+        if ($user->foto && file_exists(public_path('storage/fotos/' . $user->foto))) {
+            unlink(public_path('storage/fotos/' . $user->foto));
+        }
+        $file = $request->file('foto');
+        $fileName = $file->getClientOriginalName() . '.' . $file->getClientOriginalExtension();
+        $file->move(public_path('storage/fotos/'), $fileName);
+        $user->foto = $fileName;
+        $user->save();
+        return back()->with('status','Profil Update!');
+    }
+}
 }
 
 

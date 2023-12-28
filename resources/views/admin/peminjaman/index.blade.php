@@ -80,7 +80,7 @@
                                             </button>
                                         </div>
                                         <div class="modal-body">    
-                                            Apakah anda yakin akan menghapus data {{$peminjaman->nama}}
+                                            Apakah anda yakin akan menghapus data {{$peminjaman->name}}
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-success"
@@ -131,7 +131,7 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="recipient-name" class="col-form-label">Tanggal Peminjaman :</label>
-                                    <input type="date" name="tgl_peminjaman" class="form-control @error('tgl_peminjaman') is-invalid @enderror" id="recipient-name" value="{{ date('Y-m-d') }}" >
+                                    <input type="date" name="tgl_peminjaman" class="form-control @error('tgl_peminjaman') is-invalid @enderror" id="recipient-name" value="{{ date('Y-m-d') }}" readonly>
                                     @error('tgl_peminjaman')
                                         <div class="invalid-feedback">
                                             {{$message}}

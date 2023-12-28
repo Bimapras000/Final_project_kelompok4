@@ -48,12 +48,24 @@
                 {{Auth::user()->name}}
                 @endif
             </span>
-        
+            <img class="img-profile rounded-circle"
+            src="{{ asset('storage/fotos/' . Auth::user()->foto) }}" alt="Profile Picture">
+
+            <!-- @empty($user->foto)
+            <img class="img-profile rounded-circle" src="{{url('admin/img/user.png')}}" alt="Photo Profil">
+            @else
+            <img class="img-profile rounded-circle"
+            src="{{ asset('storage/fotos/' . Auth::user()->foto) }}" alt="Profile Picture">
+            @endempty -->
         </a>
         <!-- Dropdown - User Information -->
         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
             aria-labelledby="userDropdown">
             <a class="dropdown-item" href="{{url('admin/profile')}}">
+                <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-600"></i>
+                Profil
+            </a>
+            <a class="dropdown-item" href="{{url('admin/reset')}}">
                 <i class="fas fa-key fa-sm fa-fw mr-2 text-gray-600"></i>
                 Reset Password
             </a>

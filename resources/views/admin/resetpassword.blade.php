@@ -16,7 +16,7 @@
 
 <div class="card shadow mb-4">
     <div class="card-body">
-<form method="POST" action="{{ route('profile.update') }}" enctype="multipart/form-data">
+<form method="POST" action="{{ route('reset.update') }}" enctype="multipart/form-data">
     @csrf
     @method('PATCH')
     <div class="row mb-3">

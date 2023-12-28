@@ -6,9 +6,11 @@ use Illuminate\Http\Request;
 use App\Models\Peminjaman;
 use App\Models\Pengembalian;
 use App\Models\Buku;
-use App\Models\Users;
+use App\Models\User;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\PengembalianExport;
+use Carbon\Carbon;
+
 use PDF;
 use DB;
 
@@ -22,7 +24,7 @@ class PengembalianController extends Controller
         // $pengembalian = Pengembalian::all();
         // return view ('admin.pengembalian.index', compact('pengembalian'));
         $buku = DB::table('buku')->get();
-        $users = DB::table('users')->get();
+        $user = DB::table('users')->get();
         // $peminjaman = Peminjaman::join('users', 'users_id', '=', 'users.id')
         //     ->join('buku', 'buku_id', '=', 'buku.id')
         //     ->select('peminjaman.*', 'users.id as users', 'buku.judulbuku as buku')
@@ -32,7 +34,7 @@ class PengembalianController extends Controller
         ->join('buku', 'buku.id', '=', 'pengembalian.buku_id')
         ->select('pengembalian.*', 'users.name as nama_peminjam', 'buku.judulbuku as judul_buku')
         ->get();
-        return view ('admin.pengembalian.index', compact('pengembalian','buku','users'));
+        return view ('admin.pengembalian.index', compact('pengembalian','buku','user'));
     
     }
 
@@ -99,7 +101,7 @@ class PengembalianController extends Controller
 
     public function pengembalianPDF(){
         $buku = DB::table('buku')->get();
-        $users = DB::table('users')->get();
+        $user = DB::table('users')->get();
 
         $pengembalian = Pengembalian::join('users', 'users.id', '=', 'pengembalian.users_id')
         ->join('buku', 'buku.id', '=', 'pengembalian.buku_id')

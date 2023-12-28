@@ -65,7 +65,20 @@
       </select>
     </div>
   </div>
-  
+  <div class="form-group row">
+    <label for="text4" class="col-4 col-form-label">Foto</label> 
+    <div class="col-8">
+      <input id="text4" name="foto" type="file" class="form-control @error('foto') is-invalid @enderror" >
+      @if (!empty($user->foto) && !request()->hasFile('foto'))
+            <img src="{{ asset('storage/fotos/'.$user->foto) }}" alt="Photo Profil">
+        @endif
+      @error('foto')
+        <div class="invalid-feedback">
+            {{$message}}
+        </div>
+      @enderror
+    </div>
+  </div>
   <div class="form-group row">
     <div class="offset-4 col-8">
         <a href="{{url('admin/anggota')}}" class="btn btn-secondary">close</a>

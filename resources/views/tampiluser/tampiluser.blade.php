@@ -1,6 +1,8 @@
 @extends('tampiluser.layout.app')
 @section('user')
 
+
+
     <section class="site-banner jarallax min-height300 padding-large" style="background: url({{asset('usercss/images/back.jpg')}}) no-repeat; background-position: top; ">
       <div class="container">
         <div class="row">
@@ -30,6 +32,15 @@
                   <button class="btn btn-dark" type="submit">Search <i class="icon icon-search"></i></button>
               <!-- </div> -->
               </form>
+              @if($errors->any())
+                  <div class="alert alert-danger">
+                      <ul class="list-unstyled" align="center">
+                          @foreach($errors->all() as $error)
+                              <li>{{ $error }}</li>
+                          @endforeach
+                      </ul>
+                  </div>
+              @endif
               <div class="tab-content">
                 <div id="all" data-tab-content class="active">
                   <div class="row d-flex flex-wrap">
